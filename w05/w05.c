@@ -32,12 +32,12 @@ int my_strlen( char *str ){
 }
 
 char * my_strcpy( char *dest, char *source ){
-    while( *source ){
-        *dest = *source;
+    char *temp = dest;
+    while( *dest = *source ){
         dest++;
         source++;
     }
-    return dest;
+    return temp;
 }
 
 int main(){
