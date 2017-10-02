@@ -31,6 +31,15 @@ int my_strlen( char *str ){
     return i;
 }
 
+char * my_strcpy( char *dest, char *source ){
+    while( *source ){
+        *dest = *source;
+        dest++;
+        source++;
+    }
+    return dest;
+}
+
 int main(){
     char s1[] = "?\n?W?";
     char s2[] = "hello";
@@ -38,6 +47,12 @@ int main(){
 
     printf("Testing strlen(s2)\n");
     printf("standard: %d\nmine: %d\n", strlen(s2), my_strlen(s2) );
+
+    char s4[] = "?\n?W?";
+    char s5[] = "hello";
+
+    printf("Testing strcpy(s1, s2):\n");
+    printf("standard: %s\nmine: %s\n", strcpy(s1, s2), my_strcpy(s4, s5) );
 }
 
 /*
