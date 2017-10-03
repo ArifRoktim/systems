@@ -22,6 +22,32 @@ Remember you should call them something other than the regular names (like, myst
 #include <string.h>
 #include "headers.h"
 
+// Resets the 3 string to their original values
+void reset( char *s0, char *s1, char *s2 ){
+    //char s0[] = "?\n?W?";
+    s0[0] = '?';
+    s0[1] = '\n';
+    s0[2] = '?';
+    s0[3] = 'W';
+    s0[4] = '?';
+    s0[5] = 0;
+    //char s1[] = "hello";
+    s1[0] = 'h';
+    s1[1] = 'e';
+    s2[2] = s2[3] = 'l';
+    s2[4] = 'o';
+    s2[5] = 0;
+    //char s2[] = "goodbye";
+    s2[0] = 'g';
+    s2[1] = s2[2] = 'o';
+    s2[3] = 'd';
+    s2[4] = 'b';
+    s2[5] = 'y';
+    s2[6] = 'e';
+    s2[7] = 0;
+    //printf("s0: %s\ns1: %s\ns2: %s\n", s0, s1, s2);
+}
+
 int my_strlen( char *str ){
     int i = 0;
     while( *str ){
@@ -40,19 +66,36 @@ char * my_strcpy( char *dest, char *source ){
     return temp;
 }
 
+char * my_strncat( char *dest, char *source, int n ){
+    char *temp = dest;
+    dest += strlen( dest );
+    while( n-- ){
+        *dest = *source;
+        dest++;
+        source++;
+    }
+    *dest = 0;
+    return temp;
+}
+
 int main(){
-    char s1[] = "?\n?W?";
-    char s2[] = "hello";
-    char s3[] = "goodbye";
+    char s0[50] = "?\n?W?";
+    char s1[50] = "hello";
+    char s2[50] = "goodbye";
+    printf("================\nTesting strlen(s1)\n");
+    printf("standard: %ld\n", strlen(s1));
+    reset( s0, s1, s2 );
+    printf("mine: %d\n", my_strlen(s1));
 
-    printf("Testing strlen(s2)\n");
-    printf("standard: %d\nmine: %d\n", strlen(s2), my_strlen(s2) );
+    printf("================\nTesting strcpy(s0, s1):\n");
+    printf("standard: %s\n", strcpy(s0, s1));
+    reset( s0, s1, s2 );
+    printf("mine: %s\n", my_strcpy(s0, s1) );
 
-    char s4[] = "?\n?W?";
-    char s5[] = "hello";
-
-    printf("Testing strcpy(s1, s2):\n");
-    printf("standard: %s\nmine: %s\n", strcpy(s1, s2), my_strcpy(s4, s5) );
+    printf("================\nTesting strncat(s2, s1, 4)\n");
+    printf("standard: %s\n", strncat(s2, s1, 4));
+    reset( s0, s1, s2 );
+    printf("mine: %s\n", my_strncat(s2, s1, 4));
 }
 
 /*
