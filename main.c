@@ -21,6 +21,8 @@ int main(){
     printf("standard: %s\n", strncat(s2, s1, 4));
     reset( s0, s1, s2 );
     printf("mine: %s\n", my_strncat(s2, s1, 4));
+    
+    return 0;
 }
 
 /*
