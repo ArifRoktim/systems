@@ -35,19 +35,24 @@ int main(){
     char s2[50] = "goodbye";
     printf("================\nTesting strlen(s1)\n");
     printf("standard: %ld\n", strlen(s1));
-    reset( s0, s1, s2 );
     printf("mine: %d\n", my_strlen(s1));
 
     printf("================\nTesting strcpy(s0, s1):\n");
     printf("standard: %s\n", strcpy(s0, s1));
     reset( s0, s1, s2 );
     printf("mine: %s\n", my_strcpy(s0, s1) );
+    reset( s0, s1, s2 );
 
     printf("================\nTesting strncat(s2, s1, 4)\n");
     printf("standard: %s\n", strncat(s2, s1, 4));
     reset( s0, s1, s2 );
     printf("mine: %s\n", my_strncat(s2, s1, 4));
+    reset( s0, s1, s2 );
     
+    printf("================\nTesting strchr(s1, 'l')\n");
+    printf("stadard: %p\n", strchr(s1, 'l'));
+    printf("mine: %p\n", my_strchr(s1, 'l'));
+
     return 0;
 }
 
