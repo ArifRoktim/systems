@@ -61,11 +61,9 @@ char * my_strchr( char *s, char c ){
 }
 
 int my_strcmp( char *s1, char *s2 ){
-    int cmp = 0;
-    while( cmp == 0 && *s1 && *s2 ){
-        cmp = *s1 - *s2;
+    while( *s1 && *s2 && (*s1 == *s2)){
         s1++;
         s2++;
     }
-    return cmp;
+    return *s1 - *s2;
 }
