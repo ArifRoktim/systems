@@ -48,3 +48,14 @@ char * my_strncat( char *dest, char *source, int n ){
     *dest = 0;
     return temp;
 }
+
+char * my_strchr( char *s, char c ){
+    while( *s && *s != c ){
+        s++;
+    }
+    if( *s == c ){
+        return s;
+    } else {
+        return 0;
+    }
+}
