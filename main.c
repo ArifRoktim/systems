@@ -50,9 +50,21 @@ int main(){
     reset( s0, s1, s2 );
     
     printf("================\nTesting strchr(s1, 'l')\n");
-    printf("stadard: %p\n", strchr(s1, 'l'));
+    printf("standard: %p\n", strchr(s1, 'l'));
     printf("mine: %p\n", my_strchr(s1, 'l'));
 
+    printf("================\nTesting strcmp(s1, s2)\n");
+    printf("standard: %i\n", strcmp(s1, s2));
+    printf("mine: %i\n", my_strcmp(s1, s2));
+    printf("================\nTesting strcmp(s2, s1)\n");
+    printf("standard: %i\n", strcmp(s2, s1));
+    printf("mine: %i\n", my_strcmp(s2, s1));
+    printf("================\nTesting strcmp(s2, s2)\n");
+    printf("standard: %i\n", strcmp(s2, s2));
+    printf("mine: %i\n", my_strcmp(s2, s2));
+    printf("================\nTesting strcmp(\"hello\", \"hellobayan\")\n");
+    printf("standard: %i\n", strcmp("hello", "hellobayan"));
+    printf("mine: %i\n", my_strcmp("hello", "hellobayan"));
     return 0;
 }
 
