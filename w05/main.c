@@ -3,6 +3,32 @@
 #include <string.h>
 #include "my_string.h"
 
+// Resets the 3 string to their original values
+void reset( char *s0, char *s1, char *s2 ){
+    //char s0[] = "?\n?W?";
+    s0[0] = '?';
+    s0[1] = '\n';
+    s0[2] = '?';
+    s0[3] = 'W';
+    s0[4] = '?';
+    s0[5] = 0;
+    //char s1[] = "hello";
+    s1[0] = 'h';
+    s1[1] = 'e';
+    s2[2] = s2[3] = 'l';
+    s2[4] = 'o';
+    s2[5] = 0;
+    //char s2[] = "goodbye";
+    s2[0] = 'g';
+    s2[1] = s2[2] = 'o';
+    s2[3] = 'd';
+    s2[4] = 'b';
+    s2[5] = 'y';
+    s2[6] = 'e';
+    s2[7] = 0;
+    //printf("s0: %s\ns1: %s\ns2: %s\n", s0, s1, s2);
+}
+
 int main(){
     char s0[50] = "?\n?W?";
     char s1[50] = "hello";
