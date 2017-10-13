@@ -18,7 +18,17 @@ void print_list( struct node *list ){
         printf("%s->", list->text );
         list = list->next;
     }
-    printf("\n");
+    printf("NULL\n");
+}
+
+struct node * free_list( struct node *list ){
+    struct node *temp = list;
+    while( list ){
+        struct node *next = list->next;
+        free(list);
+        list = next;
+    }
+    return temp;
 }
 
 int main(){
@@ -27,7 +37,11 @@ int main(){
     llist = insert_front( llist, "bobbins" );
     llist = insert_front( llist, "bob" );
 
-    print_list( llist );
+    print_list(llist);
+
+    printf("Pointer to llist: %p and %p\n", llist, free_list( llist ));
+
+    print_list(llist);
 
     return 0;
 }
