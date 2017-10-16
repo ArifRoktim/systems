@@ -22,13 +22,12 @@ void print_list( struct node *list ){
 }
 
 struct node * free_list( struct node *list ){
-    struct node *temp = list;
     while( list ){
         struct node *next = list->next;
         free(list);
         list = next;
     }
-    return temp;
+    return 0;
 }
 
 int main(){
@@ -39,7 +38,8 @@ int main(){
 
     print_list(llist);
 
-    printf("Pointer to llist: %p and %p\n", llist, free_list( llist ));
+    printf("Pointer to llist: %p\n", llist );
+    printf("Pointer to llist after freeing: %p\n", llist = free_list(llist));
 
     print_list(llist);
 
