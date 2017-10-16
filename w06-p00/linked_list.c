@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct node {
     char *name;
@@ -32,6 +33,16 @@ struct node * free_list( struct node *list ){
     return 0;
 }
 
+struct node * find( struct node *list, char *name ){
+    while( list ){
+        if(strcmp( list->name, name ) == 0){
+            return list;
+        }
+        list = list->next;
+    }
+    return 0;
+}
+
 int main(){
     struct node *llist = 0;
     llist = insert_front( llist, "is bob", "2" );
@@ -40,10 +51,11 @@ int main(){
 
     print_list(llist);
 
-    printf("Pointer to llist: %p\n", llist );
-    printf("Pointer to llist after freeing: %p\n", llist = free_list(llist));
+    printf("[bobbins] is at %p and is %s\n", find(llist, "bobbins"), find(llist, "bobbins")->name);
+    //printf("Pointer to llist: %p\n", llist );
+    //printf("Pointer to llist after freeing: %p\n", llist = free_list(llist));
 
-    print_list(llist);
+    //print_list(llist);
 
     return 0;
 }
