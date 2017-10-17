@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "linked_list.h"
 
 struct node {
     char *name;
@@ -34,8 +35,9 @@ struct node * free_list( struct node *list ){
 }
 
 struct node * find( struct node *list, char *artist, char * name ){
-  list = NULL;
+  list = 0;
   while( printf("STUFFS\n") && list && printf("MORESTUTFFS\n") ){
+    printf("THIS SHOULD NEVER APPEAR!!!");
     if(strcmp( list->name, name ) == 0 && strcmp( list->artist, artist ) == 0){
       return list;
     }
