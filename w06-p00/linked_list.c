@@ -10,16 +10,15 @@ struct node {
 };
 
 struct node * insert_front( struct node *node, char *artist, char *name ){
-    struct node *front = malloc( sizeof(struct node) );
+    struct node *front = (struct node *) malloc( sizeof(struct node) );
     front->name = name;
     front->artist = artist;
-    front->next = node;
-    return front;
+    front->next = node; return front;
 }
 
 void print_list( struct node *list ){
   while( list ){
-        printf("%s,%s -> ", list->name, list->artist );
+        printf("%s, %s -> ", list->name, list->artist );
         list = list->next;
     }
     printf("NULL\n");
@@ -56,7 +55,7 @@ struct node * get_index( struct node * list, int index){
 
 struct node * insert( struct node * list, int index, char *artist, char *name){
     if( index == 0 ){
-        return insert_front( list, artist, name );
+        return list = insert_front( list, artist, name );
     }
     struct node *new = (struct node*) malloc( sizeof(struct node) );
     new->artist = artist;
@@ -70,14 +69,12 @@ struct node * insert( struct node * list, int index, char *artist, char *name){
         before->next = new;
         new->next = temp;
     }
-    return new;
+    return list;
 }
 
 struct node * insert_order( struct node *list, char *artist, char *name){
   if(!list){
-    return insert_front(list, artist, name);
-  }
-  while (strcmp ( list -> artist, artist) > 0){
+    return insert_front(list, artist, name); } while (strcmp ( list -> artist, artist) > 0){
     list = list -> next;
   }
 }
@@ -94,8 +91,15 @@ int main(){
     printf("[bobbins2] is at %p\n", find(llist, "bobbins2", "1"));
     printf("[bobbins] is at %p\n", find(llist, "bobbins", "1"));
 
-    insert( llist, 1, "middle", "malcolm" );
+    llist = insert( llist, 1, "middle", "malcolm" );
     print_list(llist);
+
+    llist = insert( llist, 0, "beginning", "the" );
+    print_list(llist);
+
+    //insert( llist, 1, "end", "the" );
+    //print_list(llist);
+
 
     return 0;
 }
