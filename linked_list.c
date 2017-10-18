@@ -35,17 +35,13 @@ struct node * free_list( struct node *list ){
 }
 
 struct node * find( struct node *list, char *artist, char * name ){
-  list = 0;
-  while( printf("STUFFS: %p\n", list) && list && printf("MORESTUTFFS\n") ){
-      /*
-    printf("THIS SHOULD NEVER APPEAR!!!");
+  while( list ){
     if(strcmp( list->name, name ) == 0 && strcmp( list->artist, artist ) == 0){
       return list;
     }
     printf( "name: %s\n", list->name);
     printf( "next: %p\n\n", list->next);
     list = list->next;
-    */
   }
   return 0;
 }
@@ -54,11 +50,27 @@ struct node * get_index( struct node * list, int index){
   int i = 0;
   for(; i < index; i++){
     list = list -> next;
-  }return list;
+  }
+  return list;
 }
 
 struct node * insert( struct node * list, int index, char *artist, char *name){
-  
+    if( index == 0 ){
+        return insert_front( list, artist, name );
+    }
+    struct node *new;
+    new->artist = artist;
+    new->name = name;
+    struct node *before = get_index( list, index - 1 );
+    if( before->next == 0 ){
+        new->next = 0;
+        before->next = new;
+    } else {
+        struct node *temp = before->next;
+        before->next = new;
+        new->next = temp;
+    }
+    return new;
 }
 
 struct node * insert_order( struct node *list, char *artist, char *name){
@@ -79,13 +91,14 @@ int main(){
 
     print_list(llist);
 
-    printf("[bobbins] is at %p and is %s\n", find(llist, "bobbins2", "1"), find(llist, "bobbins2", "1")->artist);
+    printf("[bobbins2] is at %p\n", find(llist, "bobbins2", "1"));
+    printf("[bobbins] is at %p\n", find(llist, "bobbins", "1"));
     //printf("Pointer to llist: %p\n", llist );
     //printf("Pointer to llist after freeing: %p\n", llist = free_list(llist));
 
     //print_list(llist);
 
-    printf("\n\n'a' -> 'b' : %d\n", strcmp("a", "b"));
+    //printf("\n\n'a' -> 'b' : %d\n", strcmp("a", "b"));
 
     //printf("\n\n[bobbins] : %s\n", get_index(llist, 1) -> artist);
 
