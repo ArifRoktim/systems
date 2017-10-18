@@ -36,7 +36,8 @@ struct node * free_list( struct node *list ){
 
 struct node * find( struct node *list, char *artist, char * name ){
   list = 0;
-  while( printf("STUFFS\n") && list && printf("MORESTUTFFS\n") ){
+  while( printf("STUFFS: %p\n", list) && list && printf("MORESTUTFFS\n") ){
+      /*
     printf("THIS SHOULD NEVER APPEAR!!!");
     if(strcmp( list->name, name ) == 0 && strcmp( list->artist, artist ) == 0){
       return list;
@@ -44,6 +45,7 @@ struct node * find( struct node *list, char *artist, char * name ){
     printf( "name: %s\n", list->name);
     printf( "next: %p\n\n", list->next);
     list = list->next;
+    */
   }
   return 0;
 }
