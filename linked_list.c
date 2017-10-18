@@ -58,7 +58,7 @@ struct node * insert( struct node * list, int index, char *artist, char *name){
     if( index == 0 ){
         return insert_front( list, artist, name );
     }
-    struct node *new;
+    struct node *new = (struct node*) malloc( sizeof(struct node) );
     new->artist = artist;
     new->name = name;
     struct node *before = get_index( list, index - 1 );
@@ -93,14 +93,9 @@ int main(){
 
     printf("[bobbins2] is at %p\n", find(llist, "bobbins2", "1"));
     printf("[bobbins] is at %p\n", find(llist, "bobbins", "1"));
-    //printf("Pointer to llist: %p\n", llist );
-    //printf("Pointer to llist after freeing: %p\n", llist = free_list(llist));
 
-    //print_list(llist);
-
-    //printf("\n\n'a' -> 'b' : %d\n", strcmp("a", "b"));
-
-    //printf("\n\n[bobbins] : %s\n", get_index(llist, 1) -> artist);
+    insert( llist, 1, "middle", "malcolm" );
+    print_list(llist);
 
     return 0;
 }
