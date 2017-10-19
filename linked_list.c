@@ -106,8 +106,10 @@ struct node * insert_order( struct node *list, char *artist, char *name){
   if(!list){
     return insert_front(list, artist, name); 
   } 
-  while ( printf("Print0: %p\n",list) && list != 0 && printf("Print1: %p\n",list)
-              && strcmp ( list -> artist, artist) > 0){
+  while( list != 0 && strcmp( list -> artist, artist) > 0){
+    list = list -> next;
+  }
+  while( list != 0 && strcmp( list->name, name ) > 0 ){
     list = list -> next;
   }
   if( list ){
