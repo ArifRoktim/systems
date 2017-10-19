@@ -64,7 +64,16 @@ int main(){
     srand(time(NULL));
     struct node *rand = rand_element( llist );
     printf("Random song is: [%s] by [%s]\n", rand->name, rand->artist);
+    printf("\n\n");
 
+    printf("========Testing remove_song()========\n");
+    printf("Removing [Mamma Mia] by [ABBA].\n");
+    llist = remove_song(llist, "ABBA", "Dancing Queen");;
+    print_list(llist);
+    printf("Removing [Mr. Blue Sky] by [ELO].\n");
+    llist = remove_song(llist, "ELO", "Mr. Blue Sky");;
+    print_list(llist);
+    printf("\n\n");
 
     free_list(llist);
     return 0;

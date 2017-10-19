@@ -140,6 +140,31 @@ struct node * rand_element( struct node *list ){
     return list;
 }
 
+// Removes given song.
+// Returns node to beginning of list.
+// Usage:
+// llist = remove_song( llist, "foo", "bar" );
+struct node * remove_song( struct node *list, char *artist, char *name ){
+    struct node *front = list;
+    if( strcmp(list->name, name) == 0 && strcmp(list->artist, artist) == 0 ){
+        //printf("First!");
+        struct node *temp = list;
+        list = list->next;
+        free(temp);
+        return list;
+    }
+    while( list->next ){
+        if( strcmp(list->next->name, name) == 0 && strcmp(list->next->artist, artist) == 0 ){
+            struct node *temp = list->next;
+            list->next = list->next->next;
+            free(temp);
+            return front;
+        }
+        list = list->next;
+    }
+    return front;
+}
+
 /*
 You should start by making your linked lists work with the following functionality:
 insert nodes at the front [done]
@@ -148,6 +173,6 @@ print the entire list [done]
 find and return a pointer to a node based on artist and song name [done]
 find and return a pointer to the first song of an artist based on artist name [done]
 Return a pointer to random element in the list. [done]
-remove a single specified node from the list
+remove a single specified node from the list [done]
 free the entire list [done]
 */
