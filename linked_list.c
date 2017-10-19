@@ -33,6 +33,7 @@ void print_list( struct node *list ){
 // Frees linked list. Returns null pointer.
 struct node * free_list( struct node *list ){
     while( list ){
+        printf("Free'd [%s] by [%s]\n", list->name, list->artist);
         struct node *next = list->next;
         free(list);
         list = next;
@@ -98,36 +99,51 @@ struct node * insert_at_node( struct node * node, char *artist, char *name ){
 }
 
 struct node * insert_order( struct node *list, char *artist, char *name){
+  struct node *temp = list;
   if(!list){
     return insert_front(list, artist, name); 
   } 
   while (strcmp ( list -> artist, artist) > 0){
     list = list -> next;
   }
+  insert_at_node( list, artist, name );
+  return temp;
 }
 	
 
 int main(){
     struct node *llist = 0;
+    printf("=============TESTING LLIST==============\n");
+    printf("========TESTING insert_front()========\n");
     llist = insert_front( llist, "is bob", "lisa" );
     llist = insert_front( llist, "bobbins", "holmes" );
     llist = insert_front( llist, "bob", "doughnut" );
 
     print_list(llist);
+    printf("\n\n");
 
+    printf("========TESTING find()========\n");
     printf("[bobbins2] is at %p\n", find(llist, "bobbins2", "holmes"));
     printf("[bobbins] is at %p\n", find(llist, "bobbins", "holmes"));
+    printf("\n\n");
 
+    printf("========TESTING insert()========\n");
     llist = insert( llist, 1, "middle", "malcolm" );
     print_list(llist);
 
     llist = insert( llist, 0, "beginning", "the" );
     print_list(llist);
+    printf("\n\n");
 
+    printf("========TESTING insert_at_node()========\n");
     insert_at_node( find(llist,"bob","doughnut"), "test", "123" );
-    //insert( llist, 1, "end", "the" );
     print_list(llist);
+    printf("\n\n");
 
+    printf("Freeing llist\n");
+    llist = free_list(llist);
+    printf("Printing llist:");
+    print_list(llist);
 
     return 0;
 }
