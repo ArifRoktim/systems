@@ -32,7 +32,7 @@ void print_list( struct node *list ){
 
 // Frees linked list. Returns null pointer.
 struct node * free_list( struct node *list ){
-    printf("Freeing list\n");
+    printf("========Freeing list========\n");
     while( list ){
         printf("Free'd [%s] by [%s]\n", list->name, list->artist);
         struct node *next = list->next;
@@ -121,13 +121,25 @@ struct node * insert_order( struct node *list, char *artist, char *name){
   } return temp;
 }
 
+// Returns the node of the first song of an artist in list
+struct node * find_artist( struct node *list, char *artist ){
+    while( list ){
+        if( strcmp( list->artist, artist ) == 0 ){
+            return list;
+        }
+        list = list->next;
+    }
+    return 0;
+}
+
+
 /*
 You should start by making your linked lists work with the following functionality:
 insert nodes at the front [done]
 insert nodes in order [done]
 print the entire list [done]
 find and return a pointer to a node based on artist and song name [done]
-find and return a pointer to the first song of an artist based on artist name
+find and return a pointer to the first song of an artist based on artist name [done]
 Return a pointer to random element in the list.
 remove a single specified node from the list
 free the entire list [done]

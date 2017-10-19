@@ -36,7 +36,7 @@ int main(){
     printf("Printing llist:");
     print_list(llist);
 
-    printf("%d\n",strcmp("a","b")); // -1
+    //printf("%d\n",strcmp("a","b")); // -1
 
     printf("========Testing insert_order()==========\n");
     llist = insert_order( llist, "ELO", "Twilight" );
@@ -53,6 +53,11 @@ int main(){
     print_list(llist);
     llist = insert_order( llist, "ABBA", "Mamma Mia" );
     print_list(llist);
+    printf("\n\n");
+
+    printf("========Testing find_artist()========\n");
+    print_list( find_artist(llist, "ELO") );
+    printf("\n\n");
 
     free_list(llist);
     return 0;
