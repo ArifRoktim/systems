@@ -23,3 +23,4 @@ struct node * insert_at_node( struct node * node, char *artist, char *name );
 struct node * insert_order( struct node *list, char *artist, char *name);
 struct node * find_artist( struct node *list, char *artist );
 struct node * rand_element( struct node *list );
+struct node * remove_song( struct node *list, char *artist, char *name );
