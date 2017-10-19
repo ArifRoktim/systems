@@ -76,5 +76,8 @@ int main(){
     printf("\n\n");
 
     free_list(llist);
+
+    struct node * library = create_library();
+
     return 0;
 }
