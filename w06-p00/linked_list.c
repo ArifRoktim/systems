@@ -9,21 +9,28 @@ struct node {
     struct node *next;
 };
 
+/* Inserts node at front of list. Returns the added node.
+ * Usage:
+ * node = insert_front( node, "foo", "bar" );
+ */
 struct node * insert_front( struct node *node, char *artist, char *name ){
     struct node *front = (struct node *) malloc( sizeof(struct node) );
     front->name = name;
     front->artist = artist;
-    front->next = node; return front;
+    front->next = node; 
+    return front;
 }
 
+// Prints linked list
 void print_list( struct node *list ){
   while( list ){
-        printf("%s, %s -> ", list->name, list->artist );
+        printf("[%s, %s] -> ", list->artist, list->name );
         list = list->next;
     }
     printf("NULL\n");
 }
 
+// Frees linked list. Returns null pointer.
 struct node * free_list( struct node *list ){
     while( list ){
         struct node *next = list->next;
@@ -33,19 +40,22 @@ struct node * free_list( struct node *list ){
     return 0;
 }
 
+// Returns pointer to node in linked list with artist and name.
+// Returns null pointer if not found.
 struct node * find( struct node *list, char *artist, char * name ){
   while( list ){
     if(strcmp( list->name, name ) == 0 && strcmp( list->artist, artist ) == 0){
       return list;
     }
-    printf( "name: %s\n", list->name);
-    printf( "next: %p\n\n", list->next);
+    //printf( "name: %s\n", list->name);
+    //printf( "next: %p\n\n", list->next);
     list = list->next;
   }
   return 0;
 }
 
-struct node * get_index( struct node * list, int index){
+// Returns node with index index
+struct node * get_node( struct node * list, int index){
   int i = 0;
   for(; i < index; i++){
     list = list -> next;
@@ -53,6 +63,9 @@ struct node * get_index( struct node * list, int index){
   return list;
 }
 
+// Inserts a node at index index. Returns the beginning of the list.
+// Usage:
+// node = insert( node, <index>, "foo", "bar" );
 struct node * insert( struct node * list, int index, char *artist, char *name){
     if( index == 0 ){
         return list = insert_front( list, artist, name );
@@ -60,7 +73,7 @@ struct node * insert( struct node * list, int index, char *artist, char *name){
     struct node *new = (struct node*) malloc( sizeof(struct node) );
     new->artist = artist;
     new->name = name;
-    struct node *before = get_index( list, index - 1 );
+    struct node *before = get_node( list, index - 1 );
     if( before->next == 0 ){
         new->next = 0;
         before->next = new;
@@ -72,9 +85,23 @@ struct node * insert( struct node * list, int index, char *artist, char *name){
     return list;
 }
 
+// Adds a node after the given node. Returns the added node.
+// Usage:
+// insert_at_node( node, "foo", "bar" );
+struct node * insert_at_node( struct node * node, char *artist, char *name ){
+    struct node *new = (struct node *) malloc(sizeof(struct node));
+    new->artist = artist;
+    new->name = name;
+    new->next=node->next;
+    node->next = new;
+    return new;
+}
+
 struct node * insert_order( struct node *list, char *artist, char *name){
   if(!list){
-    return insert_front(list, artist, name); } while (strcmp ( list -> artist, artist) > 0){
+    return insert_front(list, artist, name); 
+  } 
+  while (strcmp ( list -> artist, artist) > 0){
     list = list -> next;
   }
 }
@@ -82,14 +109,14 @@ struct node * insert_order( struct node *list, char *artist, char *name){
 
 int main(){
     struct node *llist = 0;
-    llist = insert_front( llist, "is bob", "2" );
-    llist = insert_front( llist, "bobbins", "1" );
-    llist = insert_front( llist, "bob", "0" );
+    llist = insert_front( llist, "is bob", "lisa" );
+    llist = insert_front( llist, "bobbins", "holmes" );
+    llist = insert_front( llist, "bob", "doughnut" );
 
     print_list(llist);
 
-    printf("[bobbins2] is at %p\n", find(llist, "bobbins2", "1"));
-    printf("[bobbins] is at %p\n", find(llist, "bobbins", "1"));
+    printf("[bobbins2] is at %p\n", find(llist, "bobbins2", "holmes"));
+    printf("[bobbins] is at %p\n", find(llist, "bobbins", "holmes"));
 
     llist = insert( llist, 1, "middle", "malcolm" );
     print_list(llist);
@@ -97,8 +124,9 @@ int main(){
     llist = insert( llist, 0, "beginning", "the" );
     print_list(llist);
 
+    insert_at_node( find(llist,"bob","doughnut"), "test", "123" );
     //insert( llist, 1, "end", "the" );
-    //print_list(llist);
+    print_list(llist);
 
 
     return 0;
