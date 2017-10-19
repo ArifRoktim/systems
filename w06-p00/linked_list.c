@@ -32,6 +32,7 @@ void print_list( struct node *list ){
 
 // Frees linked list. Returns null pointer.
 struct node * free_list( struct node *list ){
+    printf("Freeing list\n");
     while( list ){
         printf("Free'd [%s] by [%s]\n", list->name, list->artist);
         struct node *next = list->next;
@@ -151,7 +152,6 @@ int main(){
     print_list(llist);
     printf("\n\n");
 
-    printf("Freeing llist\n");
     llist = free_list(llist);
     printf("Printing llist:");
     print_list(llist);
@@ -165,6 +165,8 @@ int main(){
     print_list(llist);
     llist = insert_order( llist, "ELO", "Turn to Stone" );
     print_list(llist);
+    llist = insert_order( llist, "ELO", "Shine a Little Love" );
+    print_list(llist);
     llist = insert_order( llist, "ABBA", "Take a Chance on Me" );
     print_list(llist);
     llist = insert_order( llist, "ABBA", "Dancing Queen" );
@@ -172,5 +174,6 @@ int main(){
     llist = insert_order( llist, "ABBA", "Mamma Mia" );
     print_list(llist);
 
+    free_list(llist);
     return 0;
 }
