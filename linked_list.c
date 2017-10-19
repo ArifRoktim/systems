@@ -118,8 +118,17 @@ struct node * insert_order( struct node *list, char *artist, char *name){
   } else {
       list = temp;
       return insert_front(list, artist, name);
-  }
-  return temp;
+  } return temp;
 }
 
-
+/*
+You should start by making your linked lists work with the following functionality:
+insert nodes at the front [done]
+insert nodes in order [done]
+print the entire list [done]
+find and return a pointer to a node based on artist and song name [done]
+find and return a pointer to the first song of an artist based on artist name
+Return a pointer to random element in the list.
+remove a single specified node from the list
+free the entire list [done]
+*/
