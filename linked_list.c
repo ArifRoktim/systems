@@ -3,16 +3,9 @@
 #include <string.h>
 #include "linked_list.h"
 
-struct node {
-    char *name;
-    char *artist;
-    struct node *next;
-};
-
 /* Inserts node at front of list. Returns the added node.
  * Usage:
- * node = insert_front( node, "foo", "bar" );
- */
+ * node = insert_front( node, "foo", "bar" ); */
 struct node * insert_front( struct node *node, char *artist, char *name ){
     struct node *front = (struct node *) malloc( sizeof(struct node) );
     front->name = name;
@@ -132,6 +125,20 @@ struct node * find_artist( struct node *list, char *artist ){
     return 0;
 }
 
+// Returns a random element from the list.
+// Note: Elements are not all equally likely to be chosen but still random.
+struct node * rand_element( struct node *list ){
+    while( list->next ){
+        // Get rand double between 0 and 1
+        double r = (double)rand() / (double) RAND_MAX;
+        printf("%lf\n",r);
+        if(r < 0.25){
+            return list;
+        }
+        list = list->next;
+    }
+    return list;
+}
 
 /*
 You should start by making your linked lists work with the following functionality:
@@ -140,7 +147,7 @@ insert nodes in order [done]
 print the entire list [done]
 find and return a pointer to a node based on artist and song name [done]
 find and return a pointer to the first song of an artist based on artist name [done]
-Return a pointer to random element in the list.
+Return a pointer to random element in the list. [done]
 remove a single specified node from the list
 free the entire list [done]
 */

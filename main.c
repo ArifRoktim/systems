@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 #include "linked_list.h"
 
 int main(){
@@ -58,6 +59,12 @@ int main(){
     printf("========Testing find_artist()========\n");
     print_list( find_artist(llist, "ELO") );
     printf("\n\n");
+
+    printf("========Testing rand_element()========\n");
+    srand(time(NULL));
+    struct node *rand = rand_element( llist );
+    printf("Random song is: [%s] by [%s]\n", rand->name, rand->artist);
+
 
     free_list(llist);
     return 0;
