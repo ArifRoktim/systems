@@ -98,15 +98,24 @@ struct node * insert_at_node( struct node * node, char *artist, char *name ){
     return new;
 }
 
+// Inserts songs in order by artist and name. Returns beginning of list.
+// Usage:
+// list = insert_order( list, "foo", "bar" );
 struct node * insert_order( struct node *list, char *artist, char *name){
   struct node *temp = list;
   if(!list){
     return insert_front(list, artist, name); 
   } 
-  while (strcmp ( list -> artist, artist) > 0){
+  while ( printf("Print0: %p\n",list) && list != 0 && printf("Print1: %p\n",list)
+              && strcmp ( list -> artist, artist) > 0){
     list = list -> next;
   }
-  insert_at_node( list, artist, name );
+  if( list ){
+      insert_at_node( list, artist, name );
+  } else {
+      list = temp;
+      return insert_front(list, artist, name);
+  }
   return temp;
 }
 	
@@ -143,6 +152,22 @@ int main(){
     printf("Freeing llist\n");
     llist = free_list(llist);
     printf("Printing llist:");
+    print_list(llist);
+
+    printf("%d\n",strcmp("a","b")); // -1
+
+    printf("========Testing insert_order()==========\n");
+    llist = insert_order( llist, "ELO", "Twilight" );
+    print_list(llist);
+    llist = insert_order( llist, "ELO", "Mr. Blue Sky" );
+    print_list(llist);
+    llist = insert_order( llist, "ELO", "Turn to Stone" );
+    print_list(llist);
+    llist = insert_order( llist, "ABBA", "Take a Chance on Me" );
+    print_list(llist);
+    llist = insert_order( llist, "ABBA", "Dancing Queen" );
+    print_list(llist);
+    llist = insert_order( llist, "ABBA", "Mamma Mia" );
     print_list(llist);
 
     return 0;
