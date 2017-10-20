@@ -83,7 +83,17 @@ int main(){
     instantiate( library );
     add_song( library, "ELO", "Twilight" );
     add_song( library, "ELO", "Mr. Blue Sky" );
+    add_song( library, "ELO", "Mrs. Blue Sky" );
+    add_song( library, "ALO", "Mr. Blue Sky" );
+    add_song( library, "EZP", "A. Blue Sky" );
     print_library( library );
 
+    printf("\n\n====================PRINT LETTER===================\n");
+    print_letter( library, 'e');
+    print_letter( library, 'a');
+
+    printf("\n\n=======================FIND ARTIST===================\n");
+    print_list( find_artist_library( library, "ELO"));
+    printf("\n\n");
     return 0;
 }

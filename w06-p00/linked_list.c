@@ -99,19 +99,18 @@ struct node * insert_order( struct node *list, char *artist, char *name){
   struct node *temp = list;
   if(!list){
     return insert_front(list, artist, name); 
-  } 
-  while( list != 0 && strcmp( list -> artist, artist) > 0){
+  } printf("list->artist:%s\nartist:%s\nstrcmp():%d\n",list->artist,artist,
+	   strcmp( list->artist, artist) );
+  while( list->next != 0 && strcmp( list -> artist, artist) < 0){
+    printf("list->artist:%s\nartist:%s\nstrcmp():%d\n",list->artist,artist,
+	   strcmp( list->artist, artist) );
     list = list -> next;
   }
-  while( list != 0 && strcmp( list->name, name ) > 0 ){
+  while( list->next != 0 && strcmp( list->name, name ) > 0 ){
     list = list -> next;
   }
-  if( list ){
-      insert_at_node( list, artist, name );
-  } else {
-      list = temp;
-      return insert_front(list, artist, name);
-  } return temp;
+  insert_at_node( list, artist, name );
+  return temp;
 }
 
 // Returns the node of the first song of an artist in list
