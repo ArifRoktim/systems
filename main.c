@@ -78,10 +78,12 @@ int main(){
 
     free_list(llist);
 
+    printf("\n\n=================TESTING MUSIC LIBRARY=================\n");
     struct node *library[26];
     instantiate( library );
     add_song( library, "ELO", "Twilight" );
     add_song( library, "ELO", "Mr. Blue Sky" );
+    print_library( library );
 
     return 0;
 }
