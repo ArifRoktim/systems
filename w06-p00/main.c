@@ -112,5 +112,7 @@ int main(){
     shuffle(library);
     shuffle(library);
     
+    printf("\n=================DELETE LIBRARY==================\n");
+    delete_library(library);
     return 0;
 }
