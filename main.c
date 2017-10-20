@@ -79,7 +79,9 @@ int main(){
     free_list(llist);
 
     struct node *library[26];
+    instantiate( library );
     add_song( library, "ELO", "Twilight" );
+    add_song( library, "ELO", "Mr. Blue Sky" );
 
     return 0;
 }
