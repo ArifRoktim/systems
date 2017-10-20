@@ -107,5 +107,10 @@ int main(){
     print_list(find_song(library,"ELO","Twilight"));
     print_list(find_song(library,"ELO","Mr. Blue Sky"));
     
+    printf("\n====================SHUFFLE====================\n");
+    shuffle(library);
+    shuffle(library);
+    shuffle(library);
+    
     return 0;
 }

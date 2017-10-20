@@ -127,16 +127,26 @@ struct node * find_artist( struct node *list, char *artist ){
 // Returns a random element from the list.
 // Note: Elements are not all equally likely to be chosen but still random.
 struct node * rand_element( struct node *list ){
+    if( !list )
+        return 0;
     while( list->next ){
         // Get rand double between 0 and 1
         double r = (double)rand() / (double) RAND_MAX;
-        printf("%lf\n",r);
+        //printf("%lf\n",r);
         if(r < 0.25){
             return list;
         }
         list = list->next;
     }
     return list;
+}
+
+void print_node( struct node *item ){
+    if( item ){
+        printf("[%s, %s]", item->artist, item->name );
+    } else {
+        printf("NULL");
+    }
 }
 
 // Removes given song.
