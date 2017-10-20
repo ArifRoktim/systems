@@ -57,7 +57,19 @@ struct node * find_song( struct node *library[26], char *artist, char *name ){
     return 0;
 }
 
+void shuffle( struct node *library[26] ){
+    int times = rand() % 5 + 1;
+    while( times ){
+        int random = rand() % 26;
+        struct node *element = rand_element(library[random]);
+        if( element ){
+            times--;
+            print_node(element);
+            printf("\n");
+        }
+    }
+}
+
 /*  
-    Shuffle - print out a series of randomly chosen songs.
     Delete a song
     Delete all the nodes. */
