@@ -40,13 +40,24 @@ struct node * find_artist_library( struct node *library[26], char *artist){
 void print_artist( struct node *library[26], char *artist){
   struct node *artists = find_artist_library(library, artist);
   while ( artists && !strcmp(artists -> artist, artist)){
-    printf("[%s, %s] -> ", artists -> artist, artists -> name);
+    printf("[%s, %s],  ", artists -> artist, artists -> name);
     artists = artists -> next;
   }
   printf("NULL\n");
 }
+
+struct node * find_song( struct node *library[26], char *artist, char *name ){
+    struct node *retNode = find_artist_library( library, artist );
+    while( retNode ){
+        if( strcmp(name, retNode->name) == 0 ){
+            return retNode;
+        }
+        retNode = retNode->next;
+    }
+    return 0;
+}
+
 /*  
-    Search for a song given song and artist name (return a pointer).
     Shuffle - print out a series of randomly chosen songs.
     Delete a song
     Delete all the nodes. */

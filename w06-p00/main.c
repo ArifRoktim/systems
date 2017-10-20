@@ -93,12 +93,19 @@ int main(){
     print_letter( library, 'a');
 
     printf("\n\n=======================FIND ARTIST===================\n");
+    printf("ELO: ");
     print_list( find_artist_library( library, "ELO"));
+    printf("aadELO: ");
+    print_list( find_artist_library( library, "aadELO"));
     printf("\n\n");
 
     printf("\n\n=======================PRINT ARTIST===================\n");
     print_artist(library, "ELO");
     printf("\n\n");
+
+    printf("\n========================FIND SONG========================\n");
+    print_list(find_song(library,"ELO","Twilight"));
+    print_list(find_song(library,"ELO","Mr. Blue Sky"));
     
     return 0;
 }
