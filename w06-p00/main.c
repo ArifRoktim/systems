@@ -95,5 +95,10 @@ int main(){
     printf("\n\n=======================FIND ARTIST===================\n");
     print_list( find_artist_library( library, "ELO"));
     printf("\n\n");
+
+    printf("\n\n=======================PRINT ARTIST===================\n");
+    print_artist(library, "ELO");
+    printf("\n\n");
+    
     return 0;
 }
