@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include "linked_list.h"
+#include "library.h"
 
 int main(){
     struct node *llist = 0;
@@ -77,7 +78,8 @@ int main(){
 
     free_list(llist);
 
-    struct node * library = create_library();
+    struct node *library[26];
+    add_song( library, "ELO", "Twilight" );
 
     return 0;
 }
