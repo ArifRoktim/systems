@@ -70,6 +70,13 @@ void shuffle( struct node *library[26] ){
     }
 }
 
+void delete_library( struct node *library[26] ){
+    int i = 0;
+    for(; i <=26; i++){
+        free_list( library[i] );
+    }
+}
+
 /*  
     Delete a song
     Delete all the nodes. */

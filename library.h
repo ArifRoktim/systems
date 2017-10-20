@@ -6,3 +6,4 @@ struct node * find_artist_library( struct node *library[26], char *artist);
 void print_artist( struct node *library[26], char *artist);
 struct node * find_song( struct node *library[26], char *artist, char *name );
 void shuffle( struct node *library[26] );
+void delete_library( struct node *library[26] );
