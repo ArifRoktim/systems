@@ -111,6 +111,10 @@ int main(){
     shuffle(library);
     shuffle(library);
     shuffle(library);
+
+    printf("\n==================DELETE SONG===================\n");
+    print_library( library );
+    delete_song( library, "EZP", "A. Blue Sky" );
     
     printf("\n=================DELETE LIBRARY==================\n");
     delete_library(library);
