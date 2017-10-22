@@ -77,6 +77,11 @@ void delete_library( struct node *library[26] ){
     }
 }
 
+void delete_song( struct node *library[26], char *artist, char *name ){
+    int index = tolower(artist[0]) - 'a';
+    remove_song( library[index], artist, name );
+}
+
 /*  
     Delete a song
-    Delete all the nodes. */
+    */
