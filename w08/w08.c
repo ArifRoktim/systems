@@ -6,17 +6,17 @@
 #include <fcntl.h>
 
 void print_size( struct stat *sb ){
-    printf("Size of file: %ld\n", sb->st_size );
+    printf("Size: %ld\n", sb->st_size );
 }
 
 void print_mode( struct stat *sb ){
     int mode = sb->st_mode;
-    mode = mode >> 9;
-    printf("%d\n", mode );
+    //mode = mode >> 9;
+    printf("Mode: %o\n", mode );
 }
 
 void print_time( struct stat *sb ){
-    printf( "%s", ctime( &(sb->st_atime)  ));
+    printf("Time accessed: %s\n", ctime( &(sb->st_atime) ));
 }
 
 int main(){
@@ -25,6 +25,6 @@ int main(){
     printf("===========Info for file \"w08.c\"===========\n");
     print_size( &sb );
     print_mode( &sb );
-
+    print_time( &sb );
     return 0;
 }
