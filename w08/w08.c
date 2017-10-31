@@ -15,6 +15,10 @@ void print_mode( struct stat *sb ){
     printf("%d\n", mode );
 }
 
+void print_time( struct stat *sb ){
+    printf( "%s", ctime( &(sb->st_atime)  ));
+}
+
 int main(){
     struct stat sb;
     stat("w08.c", &sb);
