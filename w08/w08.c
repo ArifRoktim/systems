@@ -9,10 +9,37 @@ void print_size( struct stat *sb ){
     printf("Size: %ld\n", sb->st_size );
 }
 
+void print_ls( int perm ){
+  if( perm == 7 ){
+    printf("rwx");
+  } else if( perm == 6 ){
+    printf("rw-");
+  } else if( perm == 5 ){
+    printf("r-x");
+  } else if( perm == 4 ){
+    printf("r--");
+  } else if( perm == 3 ){
+    printf("-wx");
+  } else if( perm == 2 ){
+    printf("-w-");
+  } else if( perm == 1 ){
+    printf("--x");
+  }
+}
+
 void print_mode( struct stat *sb ){
-    int mode = sb->st_mode;
-    //mode = mode >> 9;
-    printf("Mode: %o\n", mode );
+    unsigned int mode = sb->st_mode;
+    printf("Mode: %o\n", mode);
+    int others = mode % 8;
+    mode /= 8;
+    int group = mode % 8;
+    mode /= 8;
+    int owner = mode % 8;
+    printf("Owner: %d, Group: %d, Other: %d\n", owner, group, others);
+    print_ls(owner);
+    print_ls(group);
+    print_ls(others);
+    printf("\n");
 }
 
 void print_time( struct stat *sb ){
