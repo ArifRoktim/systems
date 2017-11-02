@@ -6,7 +6,13 @@
 #include <fcntl.h>
 
 void print_size( struct stat *sb ){
-    printf("Size: %ld\n", sb->st_size );
+    printf("Size: \n%ld B\n", sb->st_size );
+    double size = sb->st_size / (10.0*10*10);
+    printf("%lf KB\n", size );
+    size /= (10*10*10);
+    printf("%lf MB\n", size );
+    size /= (10*10*10);
+    printf("%lf GB\n", size );
 }
 
 void print_ls( int perm ){
@@ -29,13 +35,14 @@ void print_ls( int perm ){
 
 void print_mode( struct stat *sb ){
     unsigned int mode = sb->st_mode;
-    printf("Mode: %o\n", mode);
+    //printf("Mode: %o\n", mode);
     int others = mode % 8;
     mode /= 8;
     int group = mode % 8;
     mode /= 8;
     int owner = mode % 8;
-    printf("Owner: %d, Group: %d, Other: %d\n", owner, group, others);
+    //printf("Owner: %d, Group: %d, Other: %d\n", owner, group, others);
+    printf("Permissions: ");
     print_ls(owner);
     print_ls(group);
     print_ls(others);
