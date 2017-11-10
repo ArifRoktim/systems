@@ -4,14 +4,32 @@
 #include <unistd.h>
 
 char ** parse_args( char * line ){
-  char **args = malloc( 5 * sizeof(char *));
+  int size = 5;
+  char **args = malloc( size * sizeof(char *));
   int n = 0;
   while( line ){
+    if( n + 1 > size ){
+      size += 5;
+      args = realloc( args, size * sizeof(char *));
+    }
     char * arg = strsep( &line, " ");
-    args[n] = arg;
+    args[n] = malloc( sizeof(char) * strlen(arg) );
+    strcpy( args[n], arg );
+    //args[n] = arg;
     n++;
   }
+  args[n+1] = 0;
   return args;
+}
+
+void print_str_arr( char **arr ){
+  char *str = *arr;
+  int n = 0;
+  while( str ){
+    n++;
+    printf("%d:\t%s\n", n-1, str );
+    str = *(arr + n);
+  }
 }
 
 int main(){
@@ -26,9 +44,14 @@ int main(){
   printf("[%s]\n", strsep( &s1, "-" ));
   printf("[%s]\n", s1);
   */
-  char line[100] = "ls -a -l";
+  char line[100] = "ls -a -l -F -h -i .";
   char **args = parse_args(line);
-  execvp( args[0], args);
+
+  printf("Printing **args...\n");
+  print_str_arr( args );
+
+  printf("Running execvp( args[0], args )\n");
+  execvp( args[0], args );
 
   return 0;
 
