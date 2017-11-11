@@ -8,14 +8,14 @@ char ** parse_args( char * line ){
   char **args = malloc( size * sizeof(char *));
   int n = 0;
   while( line ){
-    if( n + 1 > size ){
+    if( n + 1 > size || n == size ){
       size += 5;
       args = realloc( args, size * sizeof(char *));
     }
     args[n] = strsep( &line, " ");
     n++;
   }
-  args[n+1] = 0;
+  args[n] = 0;
   return args;
 }
 
