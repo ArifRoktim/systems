@@ -12,10 +12,7 @@ char ** parse_args( char * line ){
       size += 5;
       args = realloc( args, size * sizeof(char *));
     }
-    char * arg = strsep( &line, " ");
-    args[n] = malloc( sizeof(char) * strlen(arg) );
-    strcpy( args[n], arg );
-    //args[n] = arg;
+    args[n] = strsep( &line, " ");
     n++;
   }
   args[n+1] = 0;
@@ -44,6 +41,7 @@ int main(){
   printf("[%s]\n", strsep( &s1, "-" ));
   printf("[%s]\n", s1);
   */
+
   char line[100] = "ls -a -l -F -h -i .";
   char **args = parse_args(line);
 
