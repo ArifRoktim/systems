@@ -1,5 +1,5 @@
-all: ./w11.c
-	gcc -o w11 w11.c
+all: ./w12.c
+	gcc -o w12 w12.c
 
 run: all
-	./w11
+	./w12
