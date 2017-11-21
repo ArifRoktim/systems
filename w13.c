@@ -27,16 +27,25 @@ int main(){
     // Send data to child
     int data = 1337;
     printf("[Parent] Sending \"%d\" to child\n", data);
-    write(ptc[READ], &data, sizeof(data));
+    write(ptc[WRITE], &data, sizeof(data));
     // Wait for child to send data back
     int status;
     wait(&status);
+    // Read data from child
+    read(ctp[READ], &data, sizeof(data));
+    printf("[Parent] Received: %d\n", data);
+    return 0;
   } else {
     // Child case
     // Read data
     int data;
-    read(ptc[WRITE], &data, sizeof(data));
+    read(ptc[READ], &data, sizeof(data));
     printf("[Child] Got data: %d\n", data);
+    printf("[Child] Adding 1... (May take a while)\n");
+    data += 1;
+    // Send data
+    write(ctp[WRITE], &data, sizeof(data));
+    return 0;
   }
 
 }
