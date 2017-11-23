@@ -1,14 +1,15 @@
-all: main.o w11.o builtin.o
-	gcc -g -o main main.o w11.o builtin.o
+all: main.o parse.o
+	gcc -g -o main main.o parse.o
 
 main.o: main.c
 	gcc -g -c main.c
 
-w11.o: w11.c
-	gcc -g -c w11.c
-
-builtin.o: builtin.c
-	gcc -g -c builtin.c
+parse.o: parse.c
+	gcc -g -c parse.c
 
 run: all
 	./main
+
+clean:
+	rm *.o &> /dev/null || true
+	rm main &> /dev/null || true
