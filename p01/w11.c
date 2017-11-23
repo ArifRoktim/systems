@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 
-char ** parse_args( char * line ){
+char ** parse_args( char * line, char delim ){
   int size = 5;
   char **args = malloc( size * sizeof(char *));
   int n = 0;
@@ -12,7 +12,7 @@ char ** parse_args( char * line ){
       size += 5;
       args = realloc( args, size * sizeof(char *));
     }
-    args[n] = strsep( &line, " ");
+    args[n] = strsep( &line, &delim);
     n++;
   }
   args[n] = 0;
