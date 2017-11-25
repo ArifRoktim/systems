@@ -9,3 +9,7 @@ void strip_newline( char *str );
 // Returns a new string that has no extra spaces
 // i.e, no multiple consecutive spaces or spaces after semicolons
 char * strip_spaces( char *str );
+
+
+int fork_and_exec( char *program, char **args );
+void read_and_exec( char* input );

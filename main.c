@@ -1,8 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "w11.h"
-#include "builtin.h"
+#include "parse.h"
 
 int main( int argc, char *argv[] ){
 
