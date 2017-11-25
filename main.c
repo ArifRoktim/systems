@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include "parse.h"
 
-char * print_prompt(){
+void print_prompt(){
   char cwd[256];
   getcwd(cwd, sizeof(cwd));
   printf("%s $ ", cwd);

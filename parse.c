@@ -3,7 +3,11 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <string.h>
+#include <sys/types.h>
+#include <pwd.h>
+#include <errno.h>
 #include "parse.h"
+#include "builtin.h"
 
 int fork_and_exec( char *program, char **args ){
   int f = fork();
@@ -31,14 +35,32 @@ void read_and_exec( char* input ){
     char **args = parse_args(cmd, ' ');
     print_str_arr(args);
 
-    // fork off and exec the command
-    fork_and_exec( args[0], args );
+    // Check if cmd is a builtin function first
+    // Check if exiting
+    if( !strcmp(args[0], "exit") ){
+      exit(0);
+    }
+    // Check if cd-ing
+    else if( !strcmp(args[0], "cd") ){
+      if( args[1] ){
+        cd(args[1]);
+      } else {
+        struct passwd *pw = getpwuid(getuid());
+        cd(pw->pw_dir);
+      }
+    }
+    // Else args[0] is to be a cmd in the path
+    else{
+      // fork off and exec the command
+      fork_and_exec( args[0], args );
+    }
 
     // go to the next cmd
     n++;
     cmd = cmds[n];
   }
 }
+
 
 char ** parse_args( char * line, char delim ){
   int size = 5;
