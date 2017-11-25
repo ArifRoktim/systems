@@ -11,5 +11,4 @@ run: all
 	./main
 
 clean:
-	rm *.o &> /dev/null || true
-	rm main &> /dev/null || true
+	rm -f main *.o
