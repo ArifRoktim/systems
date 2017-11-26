@@ -16,8 +16,10 @@ int fork_and_exec( char *program, char **args ){
     wait(&status);
   } else {
     execvp( program, args );;
+    printf("shell: %s: %s\n", program, strerror(errno));
+    exit(1);
   }
-  return -1;
+  return 1;
 }
 
 void read_and_exec( char* input ){
@@ -42,7 +44,7 @@ void read_and_exec( char* input ){
     // Check if cmd is a builtin function first
     // Check if exiting
     if( !strcmp(args[0], "exit") ){
-      exit(0);
+      safely_exit(0);
     }
     // Check if cd-ing
     else if( !strcmp(args[0], "cd") ){
