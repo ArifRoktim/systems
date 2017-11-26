@@ -22,8 +22,11 @@ int fork_and_exec( char *program, char **args ){
 
 void read_and_exec( char* input ){
 
+  //printf("Input 1: %s\n", input);
   // first seperate based on semicolons
-  char **cmds = parse_args(input, ';');
+  char *delim0 = ";";
+  char **cmds = parse_args(input, delim0);
+  //printf("Input 2: %s\n", input);
   
   //print_str_arr( cmds );
   // then iterate throgh cmds and run each cmd
@@ -32,8 +35,9 @@ void read_and_exec( char* input ){
   while( cmd ){
 
     //printf("You entered: %s\n", input);
-    char **args = parse_args(cmd, ' ');
-    print_str_arr(args);
+    char *delim1 = " ";
+    char **args = parse_args(cmd, delim1);
+    //print_str_arr(args);
 
     // Check if cmd is a builtin function first
     // Check if exiting
@@ -62,16 +66,16 @@ void read_and_exec( char* input ){
 }
 
 
-char ** parse_args( char * line, char delim ){
+char ** parse_args( char *line, char *delim ){
   int size = 5;
-  char **args = malloc( size * sizeof(char *));
+  char **args = (char **) malloc( size * sizeof(char *));
   int n = 0;
   while( line ){
     if( n + 1 > size || n == size ){
       size += 5;
       args = realloc( args, size * sizeof(char *));
     }
-    args[n] = strsep( &line, &delim);
+    args[n] = strsep( &line, delim);
     n++;
   }
   args[n] = 0;
