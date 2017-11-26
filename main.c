@@ -20,6 +20,7 @@ int main( int argc, char *argv[] ){
     strip_newline(raw_input);
     char *input = strip_spaces(raw_input);
     //printf("Raw: %s\nInput: %s\n", raw_input, input);
+    //printf("Input 0: %s\n", input);
 
     read_and_exec(input);
     free(input);
