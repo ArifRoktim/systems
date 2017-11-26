@@ -5,10 +5,20 @@
 #include "parse.h"
 #include "builtin.h"
 
-int main( int argc, char *argv[] ){
+int loop = 1;
+char *vars[256][2];
 
-  int main_loop = 1;
-  while(main_loop){
+int main( int argc, char *argv[] ){
+  // Blank out variables array
+  int i = 0;
+  int j = 0;
+  for(; i < 256; i++){
+    for(; j < 2; j++){
+      vars[i][j] = 0;
+    }
+  }
+
+  while(loop){
     print_prompt();
     char *input = get_input();
 

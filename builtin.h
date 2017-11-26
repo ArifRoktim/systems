@@ -1,6 +1,5 @@
 void cd(char *dir);
-// Do pre-exit stuff and then exit
-void safely_exit();
-
+void echo(char **args);
 void print_prompt();
 char * get_input();
+void assign_var(char *input);

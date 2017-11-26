@@ -6,19 +6,15 @@
 #include "builtin.h"
 #include "parse.h"
 
+extern int loop;
+extern char *vars[256][2];
+
 void cd(char *dir){
   int status = chdir(dir);
   if(status){
     printf("shell: cd: %s: %s\n", dir, strerror(errno));
   }
 }
-
-// Do pre-exit stuff here
-void safely_exit(){
-  // TO BE IMPLEMENTED LATER
-  exit(0);
-}
-
 
 void print_prompt(){
   // Get user's cwd
@@ -33,11 +29,75 @@ void print_prompt(){
 char * get_input(){
   char raw_input[100];
   if( fgets(raw_input, sizeof(raw_input), stdin) == NULL ){
-    safely_exit();
+    loop = 0;
   }
   strip_newline(raw_input);
   char *input = strip_spaces(raw_input);
   //printf("Raw: %s\nInput: %s\n", raw_input, input);
   //printf("Input 0: %s\n", input);
   return input;
+}
+
+void assign_var(char *input){
+  char *delim = "=";
+  char *name = strsep( &input, delim);
+  int i = 0;
+  if( strchr( input, '=') ){
+    printf("shell: Invalid syntax\n");
+    return;
+  }
+  //for(; i < 256 && vars[i][0] && strcmp(vars[i][0],name); i++){
+  while( i < 256 ){
+    if( vars[i][0] ){
+      if( !strcmp( vars[i][0], name) ){
+        break;
+      } else {
+        i++;
+      }
+    } else {
+      break;
+    }
+  }
+  //printf("%d\n",i);
+  //printf("Name: %s\nInput: %s\n", name, input);
+  char *m_name = (char *) malloc( strlen(name) * sizeof(char *) );
+  char *m_input = (char *) malloc( strlen(input) * sizeof(char *) );
+  strcpy(m_name, name);
+  strcpy(m_input, input);
+  vars[i][0] = m_name;
+  vars[i][1] = m_input;
+}
+
+void print_var(char *var){
+  char *delim = "$";
+  strsep(&var, delim);
+  int i = 0;
+  while( i < 256 && vars[i][0] ){
+    if( !strcmp(vars[i][0], var) ){
+      break;
+    }
+    i++;
+  }
+  if( vars[i][0] ){
+    printf("%s",vars[i][1]);
+  }
+}
+
+void echo(char **args){
+  char *str = *args;
+  int i = 0;
+  while( str ){
+    if(i != 0){
+      // Check for dollar sign
+      if( strchr(str, '$') ){
+        //printf("Print variable");
+        print_var(str);
+      } else {
+        printf("%s", str);
+      }
+    }
+    i++;
+    str = *(args + i);
+  }
+  printf("\n");
 }

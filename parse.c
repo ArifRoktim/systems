@@ -9,6 +9,9 @@
 #include "parse.h"
 #include "builtin.h"
 
+extern int loop;
+extern char *vars[256][2];
+
 int fork_and_exec( char *program, char **args ){
   int f = fork();
   if(f){
@@ -23,6 +26,9 @@ int fork_and_exec( char *program, char **args ){
 }
 
 void read_and_exec( char* input ){
+  // If input blank, do nothing
+  if( ! strcmp(input,"") )
+    return;
 
   //printf("Input 1: %s\n", input);
   // first seperate based on semicolons
@@ -44,7 +50,7 @@ void read_and_exec( char* input ){
     // Check if cmd is a builtin function first
     // Check if exiting
     if( !strcmp(args[0], "exit") ){
-      safely_exit(0);
+      loop = 0;
     }
     // Check if cd-ing
     else if( !strcmp(args[0], "cd") ){
@@ -54,6 +60,15 @@ void read_and_exec( char* input ){
         struct passwd *pw = getpwuid(getuid());
         cd(pw->pw_dir);
       }
+    }
+    // Check if echo-ing
+    else if( !strcmp(args[0], "echo") ){
+      echo(args);
+    }
+    // Check if assigning a variable
+    else if( strchr(args[0], '=') && (strstr(args[0], "\\=") == NULL) ){
+      //printf("Heyyooo! Assigned!\n");
+      assign_var(args[0]);
     }
     // Else args[0] is to be a cmd in the path
     else{
