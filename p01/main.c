@@ -4,19 +4,14 @@
 #include <unistd.h>
 #include "parse.h"
 #include "builtin.h"
+#include "misc.h"
 
 int loop = 1;
 char *vars[256][2];
 
 int main( int argc, char *argv[] ){
-  // Blank out variables array
-  int i = 0;
-  int j = 0;
-  for(; i < 256; i++){
-    for(; j < 2; j++){
-      vars[i][j] = 0;
-    }
-  }
+  // Run initialization stuff
+  init();
 
   while(loop){
     print_prompt();
