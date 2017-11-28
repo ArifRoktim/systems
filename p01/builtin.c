@@ -27,16 +27,18 @@ void print_prompt(){
 }
 
 char * get_input(){
-  char raw_input[100];
+  //char raw_input[100];
+  char *raw_input = (char *) calloc( 100 , sizeof(char *));
   if( fgets(raw_input, sizeof(raw_input), stdin) == NULL ){
     loop = 0;
     return NULL;
   }
   strip_newline(raw_input);
-  char *input = strip_spaces(raw_input);
+  //char *input = strip_spaces(raw_input);
   //printf("Raw: %s\nInput: %s\n", raw_input, input);
   //printf("Input 0: %s\n", input);
-  return input;
+  //return input;
+  return raw_input;
 }
 
 void assign_var(char *input){
