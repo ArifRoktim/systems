@@ -88,20 +88,25 @@ void read_and_exec( char* input ){
 }
 
 
-char ** parse_args( char *line, char *delim ){
-  int size = 5;
-  char **args = (char **) malloc( size * sizeof(char *));
-  int n = 0;
-  while( line ){
-    if( n + 1 > size || n == size ){
-      size += 5;
-      args = realloc( args, size * sizeof(char *));
-    }
-    args[n] = strsep( &line, delim);
-    n++;
-  }
-  args[n] = 0;
-  return args;
+/*
+ *0.)made delim a (char *) bc of >> and << operators
+ *1.)updated function to work without strip functions
+ *2.)max size of buffer is now BUFSIZ
+ * */
+char ** parse_args(char * s1, char * delim){
+	char ** ret = (char **) calloc (BUFSIZ, sizeof(char*));
+	int i = 0;
+	char * arg;
+
+	while(i<BUFSIZ && s1){// note: s1 is null
+		arg = strsep(&s1, delim);		
+		if (*arg){//checks for extra delims, note: arg is empty
+			ret[i] = arg; 
+			i++;
+		}
+	}
+	//maybe put a realloc here
+	return ret;
 }
 
 void print_str_arr( char **arr ){
@@ -161,5 +166,21 @@ char * strip_spaces( char *str ){
       i++;
     }
   }
+  // remove trailer and leading spaces
+  // keep track of old calloc'd memory
+  char *ptr = ret;
+  // move to first non space character
+  while( *ptr && *ptr == ' ' ){
+    ptr++;
+  }
+  char *temp = ptr + strlen(ptr) - 1;
+  while( temp > ptr && *temp == ' ' ){
+    *temp = 0;
+  }
+  char temp2[strlen(ptr)];
+  strcpy(temp2, ptr);
+  strcpy(ret, temp2);
   return ret;
+  //return old;
+  // strip leading and trailing spaces
 }
