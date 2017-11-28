@@ -22,6 +22,9 @@ void init(){
   // Execute contents of init file
   int f = open(".shellrc", O_RDONLY, 0);
   char file[1024];
+  for( i = 0; i < 1024; i++ ){
+    file[i] = 0;
+  }
   if( f ){
     int status = read(f, file, sizeof(file));
     if(status == -1){
