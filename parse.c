@@ -40,11 +40,14 @@ void read_and_exec( char* input ){
   // then iterate throgh cmds and run each cmd
   char *cmd = *cmds;
   int n = 0;
+  char **args;
+  int bool_entered_loop;
   while( cmd ){
 
     //printf("You entered: %s\n", input);
     char *delim1 = " ";
-    char **args = parse_args(cmd, delim1);
+    args = parse_args(cmd, delim1);
+    bool_entered_loop = 1;
     //print_str_arr(args);
 
     // Check if cmd is a builtin function first
@@ -80,6 +83,8 @@ void read_and_exec( char* input ){
     n++;
     cmd = cmds[n];
   }
+  free(cmds);
+  free(args);
 }
 
 
