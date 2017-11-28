@@ -36,6 +36,7 @@ void read_and_exec( char* input ){
   char **cmds = parse_args(input, delim0);
   //printf("Input 2: %s\n", input);
   
+  //printf("Hey o!\n");
   //print_str_arr( cmds );
   // then iterate throgh cmds and run each cmd
   char *cmd = *cmds;
@@ -47,6 +48,10 @@ void read_and_exec( char* input ){
     //printf("You entered: %s\n", input);
     char *delim1 = " ";
     args = parse_args(cmd, delim1);
+    if( args[0] == NULL ){
+      //printf("Uh oh!\n");
+      break;
+    }
     bool_entered_loop = 1;
     //print_str_arr(args);
 
@@ -84,7 +89,8 @@ void read_and_exec( char* input ){
     cmd = cmds[n];
   }
   free(cmds);
-  free(args);
+  if( bool_entered_loop )
+    free(args);
 }
 
 
@@ -94,7 +100,7 @@ void read_and_exec( char* input ){
  *2.)max size of buffer is now BUFSIZ
  * */
 char ** parse_args(char * s1, char * delim){
-	char ** ret = (char **) calloc (BUFSIZ, sizeof(char*));
+    char ** ret = (char **) calloc (BUFSIZ, sizeof(char*));
 	int i = 0;
 	char * arg;
 
