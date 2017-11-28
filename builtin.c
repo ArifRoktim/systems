@@ -46,10 +46,11 @@ void assign_var(char *input){
     printf("shell: Invalid syntax\n");
     return;
   }
-  //for(; i < 256 && vars[i][0] && strcmp(vars[i][0],name); i++){
+  int bool_exists = 0;
   while( i < 256 ){
     if( vars[i][0] ){
       if( !strcmp( vars[i][0], name) ){
+        bool_exists = 1;
         break;
       } else {
         i++;
@@ -60,9 +61,15 @@ void assign_var(char *input){
   }
   //printf("%d\n",i);
   //printf("Name: %s\nInput: %s\n", name, input);
-  char *m_name = (char *) malloc( strlen(name) * sizeof(char *) );
-  char *m_input = (char *) malloc( strlen(input) * sizeof(char *) );
-  strcpy(m_name, name);
+  char *m_name, *m_input;
+  if( bool_exists ){
+    m_name = vars[i][0];
+    free(vars[i][1]);
+  } else {
+    m_name = (char *) malloc( strlen(name) * sizeof(char *) );
+    strcpy(m_name, name);
+  }
+  m_input = (char *) malloc( strlen(input) * sizeof(char *) );
   strcpy(m_input, input);
   vars[i][0] = m_name;
   vars[i][1] = m_input;

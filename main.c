@@ -20,5 +20,9 @@ int main( int argc, char *argv[] ){
     read_and_exec(input);
     free(input);
   }
+
+  // free stuff (and later save history)
+  cleanup();
+
   return 0;
 }

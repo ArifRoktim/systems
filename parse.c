@@ -126,7 +126,7 @@ void strip_newline( char *str ){
 // returns new string
 char * strip_spaces( char *str ){
   int size = strlen(str);
-  char *ret = (char *) calloc(1, size);
+  char *ret = (char *) calloc(1, size + 1);
   char tmp[size];
   int i = 0;
   for(; i < size; i++){

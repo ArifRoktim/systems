@@ -41,7 +41,18 @@ void init(){
       i++;
       line = lines[i];
     }
+    free(lines);
   } else {
     printf("Error opening init file: %s", strerror(errno));
+  }
+}
+
+void cleanup(){
+  // Free variables array
+  int i = 0;
+  while( i < 256 && vars[i][0] ){
+    free(vars[i][0]);
+    free(vars[i][1]);
+    i++;
   }
 }
