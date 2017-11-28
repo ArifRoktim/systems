@@ -30,6 +30,7 @@ char * get_input(){
   char raw_input[100];
   if( fgets(raw_input, sizeof(raw_input), stdin) == NULL ){
     loop = 0;
+    return NULL;
   }
   strip_newline(raw_input);
   char *input = strip_spaces(raw_input);

@@ -17,8 +17,10 @@ int main( int argc, char *argv[] ){
     print_prompt();
     char *input = get_input();
 
-    read_and_exec(input);
-    free(input);
+    if( input ){
+      read_and_exec(input);
+      free(input);
+    }
   }
 
   // free stuff (and later save history)
