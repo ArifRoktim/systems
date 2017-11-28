@@ -161,5 +161,21 @@ char * strip_spaces( char *str ){
       i++;
     }
   }
+  // remove trailer and leading spaces
+  // keep track of old calloc'd memory
+  char *ptr = ret;
+  // move to first non space character
+  while( *ptr && *ptr == ' ' ){
+    ptr++;
+  }
+  char *temp = ptr + strlen(ptr) - 1;
+  while( temp > ptr && *temp == ' ' ){
+    *temp = 0;
+  }
+  char temp2[strlen(ptr)];
+  strcpy(temp2, ptr);
+  strcpy(ret, temp2);
   return ret;
+  //return old;
+  // strip leading and trailing spaces
 }
