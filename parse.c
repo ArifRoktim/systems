@@ -53,7 +53,7 @@ void read_and_exec( char* input ){
     // Check if cmd is a builtin function first
     // Check if exiting
     if( !strcmp(args[0], "exit") ){
-      exit(1);
+      loop = 0;
     }
     // Check if cd-ing
     else if( !strcmp(args[0], "cd") ){
@@ -75,8 +75,8 @@ void read_and_exec( char* input ){
     }
     // Else args[0] is to be a cmd in the path
     else{
-      execvp( args[0], args );
-      printf("shell: %s: %s\n", args[0], strerror(errno));
+      // fork off and exec the command
+      fork_and_exec( args[0], args );
     }
 
     // go to the next cmd
