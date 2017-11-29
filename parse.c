@@ -12,6 +12,42 @@
 extern int loop;
 extern char *vars[256][2];
 
+
+char ** new_parse_args(char * s1, char * delim){
+	char ** ret = (char **) calloc (BUFSIZ, sizeof(char*));
+	int i = 0;
+	char * arg;
+
+	while(i<BUFSIZ && s1){// note: s1 is null
+		arg = strsep(&s1, delim);		
+		if (*arg){//checks for extra delims, note: arg is empty
+			ret[i] = arg; 
+			i++;
+		}
+	}
+	//maybe put a realloc here
+	return ret;
+}
+void print_bytes(char * str, int size){
+	int i = 0;
+	printf("\n[");
+	char to_print;
+	for (;i<size;i++){
+		//printf("%i", i);
+		to_print = str[i];
+		if (to_print == 0){
+			printf("/0");
+		}
+		else if (to_print == ' '){
+			printf("_");
+		}
+		else{
+			printf("%c", to_print);
+		}
+	}
+	printf("]\n");
+}
+
 int fork_and_exec( char *program, char **args ){
   int f = fork();
   if(f){
