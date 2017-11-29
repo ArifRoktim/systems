@@ -88,25 +88,20 @@ void read_and_exec( char* input ){
 }
 
 
-/*
- *0.)made delim a (char *) bc of >> and << operators
- *1.)updated function to work without strip functions
- *2.)max size of buffer is now BUFSIZ
- * */
-char ** parse_args(char * s1, char * delim){
-	char ** ret = (char **) calloc (BUFSIZ, sizeof(char*));
-	int i = 0;
-	char * arg;
-
-	while(i<BUFSIZ && s1){// note: s1 is null
-		arg = strsep(&s1, delim);		
-		if (*arg){//checks for extra delims, note: arg is empty
-			ret[i] = arg; 
-			i++;
-		}
-	}
-	//maybe put a realloc here
-	return ret;
+char ** parse_args( char *line, char *delim ){
+  int size = 5;
+  char **args = (char **) malloc( size * sizeof(char *));
+  int n = 0;
+  while( line ){
+    if( n + 1 > size || n == size ){
+      size += 5;
+      args = realloc( args, size * sizeof(char *));
+    }
+    args[n] = strsep( &line, delim);
+    n++;
+  }
+  args[n] = 0;
+  return args;
 }
 
 void print_str_arr( char **arr ){
