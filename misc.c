@@ -28,7 +28,7 @@ void init(){
   if( f ){
     int status = read(f, file, sizeof(file));
     if(status == -1){
-      printf("Error reading init file: %s", strerror(errno));
+      //printf("Error reading init file: %s", strerror(errno));
       return;
     }
 

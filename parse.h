@@ -11,5 +11,8 @@ void strip_newline( char *str );
 char * strip_spaces( char *str );
 
 
-int fork_and_exec( char *program, char **args );
+int fork_and_exec( char **args );
 void read_and_exec( char* input );
+void redirect(char **args, char direction);
+
+void dup_and_exec( char **args, int file, char direction );
