@@ -90,7 +90,7 @@ void read_and_exec( char* input ){
 
     // Check if have to redirect by seeing that args length is > 1
     if( args[1] ){
-      printf("Redirection: >\n");
+      //printf("Redirection: >\n");
       redirect(args, '>');
       n++;
       cmd = cmds[n];
@@ -104,13 +104,26 @@ void read_and_exec( char* input ){
 
     // Check if have to redirect by seeing that args length is > 1
     if( args[1] ){
-      printf("Redirection: <\n");
+      //printf("Redirection: <\n");
       redirect(args, '<');
       n++;
       cmd = cmds[n];
       continue;
     }
 
+    // Check for pipes
+    cmd = args[0];
+    free(args);
+    delim1 = "|";
+    args = parse_args(cmd, delim1);
+    if( args[1] ){
+      //printf("Redirection: |\n");
+      redirect(args, '|');
+      n++;
+      cmd = cmds[n];
+      continue;
+    }
+    
     // Else not redirecting so seperate by spaces
     char **old_args = args;
     args = parse_args(args[0], " ");
@@ -163,6 +176,26 @@ void redirect(char **args, char direction){
     } else if( direction == '<' ){
       int file = open( args[1], O_RDONLY, 0 );
       dup_and_exec(args, file, direction);
+    } else if( direction == '|' ){
+      int f = fork();
+      if(f){
+        int status;
+        wait(&status);
+      } else {
+        FILE *pipe = popen(args[0], "r");
+        int f = fork();
+        if(f){
+          int status;
+          wait(&status);
+        } else {
+          char **exec_args = parse_args(args[1], " ");
+          dup2(fileno(pipe), STDIN_FILENO);
+          execvp(exec_args[0], exec_args);
+          // if reached this point, error occurred with execing
+          printf("Error: %s: %s\n", exec_args[0], strerror(errno));
+          exit(1);
+        }
+      }
     }
   } else {
     printf("Syntax error!\n");
@@ -170,14 +203,14 @@ void redirect(char **args, char direction){
 }
 
 void dup_and_exec( char **args, int file, char direction ){
-  printf("Forking\n");
+  //printf("Forking\n");
   int f = fork();
   if(f){
-    printf("%d\n", f);
+    //printf("%d\n", f);
     int status;
     wait(&status);
   } else {
-    printf("%d\n", f);
+    //printf("%d\n", f);
     if( direction == '>' ){
       dup2( file, STDOUT_FILENO );
     } else if( direction == '<' ){
