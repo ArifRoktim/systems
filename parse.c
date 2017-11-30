@@ -86,7 +86,8 @@ void read_and_exec( char* input ){
     char *delim1 = ">";
     args = parse_args(cmd, delim1);
     bool_entered_loop = 1;
-    //print_str_arr(args);
+    //printf("Test!\n");
+    print_str_arr(args);
 
     // Check if have to redirect by seeing that args length is > 1
     if( args[1] ){
@@ -129,28 +130,9 @@ void read_and_exec( char* input ){
     args = parse_args(args[0], " ");
     free(old_args);
     
-    // Check if cmd is a builtin function first
-    // Check if exiting
-    if( !strcmp(args[0], "exit") ){
-      loop = 0;
-    }
-    // Check if cd-ing
-    else if( !strcmp(args[0], "cd") ){
-      if( args[1] ){
-        cd(args[1]);
-      } else {
-        struct passwd *pw = getpwuid(getuid());
-        cd(pw->pw_dir);
-      }
-    }
-    // Check if echo-ing
-    else if( !strcmp(args[0], "echo") ){
-      echo(args);
-    }
-    // Check if assigning a variable
-    else if( strchr(args[0], '=') && (strstr(args[0], "\\=") == NULL) ){
-      //printf("Heyyooo! Assigned!\n");
-      assign_var(args[0]);
+    // Check for builtin cmds
+    if( do_builtins(args) ){
+      // blank if statement as do_builtins has side effects
     }
     // Else args[0] is to be a cmd in the path
     else{
@@ -192,6 +174,9 @@ void dup_and_exec( char **args, int file, char direction ){
     //printf("%d\n", f);
     int status;
     wait(&status);
+    if( WIFEXITED(status) && WEXITSTATUS(status) == 2 ){
+      loop = 0;
+    }
   } else {
     //printf("%d\n", f);
     char **exec_args;
@@ -207,8 +192,14 @@ void dup_and_exec( char **args, int file, char direction ){
       exec_args = parse_args(args[1], " ");
     }
     //print_str_arr(exec_args);
-    char *arg = *exec_args;
-    execvp( exec_args[0], exec_args );
+    // Check for builtins and run them
+    if( strcmp(exec_args[0], "exit") ){
+      exit(2);
+    } else if( do_builtins(exec_args) ){
+      exit(0);
+    } else {
+      execvp( exec_args[0], exec_args );
+    }
     // if reached this point, error occurred with execing
     printf("Error: %s: %s\n", exec_args[0], strerror(errno));
     exit(1);
