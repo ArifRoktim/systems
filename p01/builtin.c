@@ -3,11 +3,42 @@
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
+#include <pwd.h>
 #include "builtin.h"
 #include "parse.h"
 
 extern int loop;
 extern char *vars[256][2];
+
+int do_builtins( char **args ){
+  // Check if exiting
+  if( !strcmp(args[0], "exit") ){
+    loop = 0;
+    return 1;
+  }
+  // Check if cd-ing
+  else if( !strcmp(args[0], "cd") ){
+    if( args[1] ){
+      cd(args[1]);
+    } else {
+      struct passwd *pw = getpwuid(getuid());
+      cd(pw->pw_dir);
+    }
+    return 1;
+  }
+  // Check if echo-ing
+  else if( !strcmp(args[0], "echo") ){
+    echo(args);
+    return 1;
+  }
+  // Check if assigning a variable
+  else if( strchr(args[0], '=') && (strstr(args[0], "\\=") == NULL) ){
+    //printf("Heyyooo! Assigned!\n");
+    assign_var(args[0]);
+    return 1;
+  }
+  return 0;
+}
 
 void cd(char *dir){
   int status = chdir(dir);
