@@ -177,25 +177,8 @@ void redirect(char **args, char direction){
       int file = open( args[1], O_RDONLY, 0 );
       dup_and_exec(args, file, direction);
     } else if( direction == '|' ){
-      int f = fork();
-      if(f){
-        int status;
-        wait(&status);
-      } else {
-        FILE *pipe = popen(args[0], "r");
-        int f = fork();
-        if(f){
-          int status;
-          wait(&status);
-        } else {
-          char **exec_args = parse_args(args[1], " ");
-          dup2(fileno(pipe), STDIN_FILENO);
-          execvp(exec_args[0], exec_args);
-          // if reached this point, error occurred with execing
-          printf("Error: %s: %s\n", exec_args[0], strerror(errno));
-          exit(1);
-        }
-      }
+      int file = -1;
+      dup_and_exec(args, file, '|');
     }
   } else {
     printf("Syntax error!\n");
@@ -211,12 +194,18 @@ void dup_and_exec( char **args, int file, char direction ){
     wait(&status);
   } else {
     //printf("%d\n", f);
+    char **exec_args;
     if( direction == '>' ){
       dup2( file, STDOUT_FILENO );
+      exec_args = parse_args(args[0], " ");
     } else if( direction == '<' ){
       dup2( file, STDIN_FILENO );
+      exec_args = parse_args(args[0], " ");
+    } else if( direction == '|'){
+      FILE *pipe = popen(args[0], "r");
+      dup2(fileno(pipe), STDIN_FILENO);
+      exec_args = parse_args(args[1], " ");
     }
-    char **exec_args = parse_args(args[0], " ");
     //print_str_arr(exec_args);
     char *arg = *exec_args;
     execvp( exec_args[0], exec_args );
