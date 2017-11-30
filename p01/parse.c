@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <pwd.h>
 #include <errno.h>
+#include <fcntl.h>
 #include "parse.h"
 #include "builtin.h"
 
@@ -48,14 +49,15 @@ void print_bytes(char * str, int size){
 	printf("]\n");
 }
 
-int fork_and_exec( char *program, char **args ){
+int fork_and_exec( char **args ){
+
   int f = fork();
   if(f){
     int status;
     wait(&status);
   } else {
-    execvp( program, args );;
-    printf("shell: %s: %s\n", program, strerror(errno));
+    execvp( args[0], args );;
+    printf("shell: %s: %s\n", args[0], strerror(errno));
     exit(1);
   }
   return 1;
@@ -81,11 +83,39 @@ void read_and_exec( char* input ){
   while( cmd ){
 
     //printf("You entered: %s\n", input);
-    char *delim1 = " ";
+    char *delim1 = ">";
     args = parse_args(cmd, delim1);
     bool_entered_loop = 1;
     //print_str_arr(args);
 
+    // Check if have to redirect by seeing that args length is > 1
+    if( args[1] ){
+      printf("Redirection: >\n");
+      redirect(args, '>');
+      n++;
+      cmd = cmds[n];
+      continue;
+    }
+
+    cmd = args[0];
+    free(args);
+    delim1 = "<";
+    args = parse_args(cmd, delim1);
+
+    // Check if have to redirect by seeing that args length is > 1
+    if( args[1] ){
+      printf("Redirection: <\n");
+      redirect(args, '<');
+      n++;
+      cmd = cmds[n];
+      continue;
+    }
+
+    // Else not redirecting so seperate by spaces
+    char **old_args = args;
+    args = parse_args(args[0], " ");
+    free(old_args);
+    
     // Check if cmd is a builtin function first
     // Check if exiting
     if( !strcmp(args[0], "exit") ){
@@ -112,7 +142,7 @@ void read_and_exec( char* input ){
     // Else args[0] is to be a cmd in the path
     else{
       // fork off and exec the command
-      fork_and_exec( args[0], args );
+      fork_and_exec( args );
     }
 
     // go to the next cmd
@@ -120,9 +150,59 @@ void read_and_exec( char* input ){
     cmd = cmds[n];
   }
   free(cmds);
-  free(args);
+  if( bool_entered_loop )
+    free(args);
 }
 
+void redirect(char **args, char direction){
+  if( args[1] ){
+    int file;
+    if( direction == '>' ){
+      int file = open( args[1], O_CREAT | O_WRONLY | O_TRUNC , 0644 );
+      dup_and_exec(args, file, direction);
+    } else if( direction == '<' ){
+      int file = open( args[1], O_RDONLY, 0 );
+      dup_and_exec(args, file, direction);
+    }
+  } else {
+    printf("Syntax error!\n");
+  }
+}
+
+void dup_and_exec( char **args, int file, char direction ){
+  printf("Forking\n");
+  int f = fork();
+  if(f){
+    printf("%d\n", f);
+    int status;
+    wait(&status);
+  } else {
+    printf("%d\n", f);
+    if( direction == '>' ){
+      dup2( file, STDOUT_FILENO );
+    } else if( direction == '<' ){
+      dup2( file, STDIN_FILENO );
+    }
+    char **exec_args = parse_args(args[0], " ");
+    //print_str_arr(exec_args);
+    char *arg = *exec_args;
+    execvp( exec_args[0], exec_args );
+    // if reached this point, error occurred with execing
+    printf("Error: %s: %s\n", exec_args[0], strerror(errno));
+    exit(1);
+  }
+}
+
+char * trim( char *str ){
+  while( *str && *str == ' ' ){
+    str++;
+  }
+  char *temp = str + strlen(str) - 1;
+  while( temp > str && *temp == ' ' ){
+    *temp = 0;
+  }
+  return str;
+}
 
 char ** parse_args( char *line, char *delim ){
   int size = 5;
@@ -134,6 +214,7 @@ char ** parse_args( char *line, char *delim ){
       args = realloc( args, size * sizeof(char *));
     }
     args[n] = strsep( &line, delim);
+    args[n] = trim(args[n]);
     n++;
   }
   args[n] = 0;
