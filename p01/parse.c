@@ -155,7 +155,11 @@ void redirect(char **args, char direction){
     int file;
     if( direction == '>' ){
       int file = open( args[1], O_CREAT | O_WRONLY | O_TRUNC , 0644 );
-      dup_and_exec(args, file, direction);
+      if( strchr( args[0], '<') ){
+        dup_and_exec(args, file, 'x');
+      } else {
+        dup_and_exec(args, file, direction);
+      }
     } else if( direction == '<' ){
       int file = open( args[1], O_RDONLY, 0 );
       dup_and_exec(args, file, direction);
@@ -184,10 +188,16 @@ void dup_and_exec( char **args, int file, char direction ){
     } else if( direction == '<' ){
       dup2( file, STDIN_FILENO );
       exec_args = parse_args(args[0], " ");
-    } else if( direction == '|'){
+    } else if( direction == '|' ){
       FILE *pipe = popen(args[0], "r");
       dup2(fileno(pipe), STDIN_FILENO);
       exec_args = parse_args(args[1], " ");
+    } else if( direction == 'x' ){
+      char **new_args = parse_args(args[0], "<");
+      dup2( file, STDOUT_FILENO );
+      int in_file = open(new_args[1], O_RDONLY, 0);
+      dup2( in_file, STDIN_FILENO);
+      exec_args = parse_args(new_args[0], " ");
     }
     //print_str_arr(exec_args);
     // Check for builtins and run them
