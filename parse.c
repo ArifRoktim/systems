@@ -87,7 +87,7 @@ void read_and_exec( char* input ){
     args = parse_args(cmd, delim1);
     bool_entered_loop = 1;
     //printf("Test!\n");
-    print_str_arr(args);
+    //print_str_arr(args);
 
     // Check if have to redirect by seeing that args length is > 1
     if( args[1] ){
@@ -151,6 +151,7 @@ void read_and_exec( char* input ){
 
 void redirect(char **args, char direction){
   if( args[1] ){
+    //printf("Redirection: %c\n", direction);
     int file;
     if( direction == '>' ){
       int file = open( args[1], O_CREAT | O_WRONLY | O_TRUNC , 0644 );
@@ -190,11 +191,14 @@ void dup_and_exec( char **args, int file, char direction ){
     }
     //print_str_arr(exec_args);
     // Check for builtins and run them
-    if( strcmp(exec_args[0], "exit") ){
+    if( strstr(exec_args[0], "exit") ){
+      //printf("Exiting!\n");
       exit(2);
     } else if( do_builtins(exec_args) ){
+      //printf("Doing builtins!\n");
       exit(0);
     } else {
+      //printf("Doing execvp!\n");
       execvp( exec_args[0], exec_args );
     }
     // if reached this point, error occurred with execing
