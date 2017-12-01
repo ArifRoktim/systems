@@ -154,7 +154,12 @@ void redirect(char **args, char direction){
     //printf("Redirection: %c\n", direction);
     int file;
     if( direction == '>' ){
-      int file = open( args[1], O_CREAT | O_WRONLY | O_TRUNC , 0644 );
+      int file;
+      if( !strcmp(args[1], "") ){
+        file = open( args[2], O_CREAT | O_WRONLY | O_APPEND, 0644 );
+      } else {
+        file = open( args[1], O_CREAT | O_WRONLY | O_TRUNC , 0644 );
+      }
       if( strchr( args[0], '<') ){
         dup_and_exec(args, file, 'x');
       } else {
