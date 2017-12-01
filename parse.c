@@ -174,9 +174,6 @@ void dup_and_exec( char **args, int file, char direction ){
     //printf("%d\n", f);
     int status;
     wait(&status);
-    if( WIFEXITED(status) && WEXITSTATUS(status) == 2 ){
-      loop = 0;
-    }
   } else {
     //printf("%d\n", f);
     char **exec_args;
