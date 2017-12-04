@@ -78,16 +78,74 @@ misc.c
 	Inputs:  None
 	Returns: Nothing
 
-	**Stuff here**
+	Clears global variable array responsible for holding shell variables
+	Reads and executes commands from ./.shellrc before prompting user
 	====================*/
   
   /*======== void cleanup() ==========
 	Inputs:  None
 	Returns: Nothing
 
-	**Stuff here**
+	Frees the global variable array responsible for holding shell variables
 	====================*/
 
 
-magical.c
-UNOCORNS! 
+parse.c
+  /*======== char ** parse_args() ==========
+	Inputs: char * line 	The string passed in from user through get_input() or ./.shellrc
+		char * delim	One of ' ' , ';' , '>', '<', '|'
+	Returns:  An array of null-terminated strings that is the result of parsing line by delim
+
+	First used to parse line into commands by semicolon delimiter
+	Then used to parse commands into tokens by delimiter ' '
+	====================*/
+	
+  /*======== void print_str_arr() ==========
+	Inputs: char ** arr   	
+	Returns:  Nothing
+	
+	Prints a string array that ends in null. Used for diagnostics
+	====================*/
+	
+  /*======== void strip_newline() ==========
+	Inputs: char * str  	
+	Returns:  Nothing
+	
+	Changes all newlines in str to null character
+	====================*/
+	
+  /*======== char * strip_spaces() ==========
+	Inputs: char * str
+	Returns: Returns a new string that has no extra spaces
+		either consecutive, leading, or trailing
+	
+	====================*/
+	
+  /*======== int fork_and_exec() ==========
+	Inputs: char ** args
+	Returns: 1 if sucessfull
+	
+	Forks off a child and makes it execute exevp(args[0], args)
+	====================*/	
+	
+ /*======== void read_and_exec() ==========
+	Inputs: char * input
+	Returns: Nothing
+	
+	
+	====================*/
+	
+/*======== void redirect() ==========
+	Inputs: char **args, char direction (either '>' or '<')
+	Returns: Nothing
+	
+	Redirects 
+	====================*/
+	
+/*======== void dup_and_exec() ==========
+	Inputs:  char **args, int file_descriptor, char direction (either '>' or '<')
+	Returns: Nothing
+	
+	
+	====================*/
+	
