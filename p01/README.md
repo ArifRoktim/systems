@@ -26,6 +26,7 @@ Attempted:
 Bugs:
 * Variables cant have spaces in their value
 * Doesn't support redirection with pipes `ls | sort -r > foo`
+* Last line of .shellrc shouldn't be blank
 * Lolcat mode 
   * Can't exit in lolcat mode
   * Doesnt print prompt until you hit enter
