@@ -47,7 +47,7 @@ int main( int argc, char *argv[] ){
     }
   }
 
-  if(!bool_rainbow){
+  if(bool_rainbow){
     rainbow();
   }
   
