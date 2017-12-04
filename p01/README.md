@@ -30,6 +30,7 @@ Planned features:
 Bugs:
 * Variables cant have spaces in their value
 * Doesn't support redirection with pipes `ls | sort -r > foo`
+* When reading in cmds via redirection, echo cmds always show up at the bottom
 * The lolcat mode (when ./main is passed the "-l" flag) is a bug in it of itself... :/
   * Can't exit in lolcat mode
   * Most of the time hangs on startup
