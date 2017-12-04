@@ -1,6 +1,6 @@
 # p01
-DWSH
-by JonAlf Dyrland-Weaver and Neeraj Bhatia
+Shell Project
+by Arif Roktim and Daniel Regassa
 
 Features:
 	Forks and executes commands!
@@ -8,29 +8,27 @@ Features:
 	Redirects using >, <!
 
 Attempted:
-	The following did not end up working, but have been left in the code, commented out.
-	Could not get pipes to work
-	Tried to implement >>, but it kept overwriting the file
-	Looked at replacing ~/ with home directory, got seg faults
+	A more efficient parse_args() function called new_parse_args(), too lazy to rewrite code to accomadate it
 
 Bugs:
 	echo'ing two arguments will print them without a space
 	
 Files & Function Headers:
+
 builtin.c
 	Handles functions that are not forked before executing
 	/*======== void cd() ==========
 	Inputs:  char * dir 
 	Returns: Nothing
  
-  Changes cwd to path described in dir
+  	Changes cwd to path described in dir
 	====================*/
 
 	/*======== void echo() ==========
 	Inputs:  char ** args
 	Returns: Nothing
   
-  Echos the strings in args to STDOUT
+  	Echos the strings in args to STDOUT
 	====================*/
 
 	/*======== void print_prompt() ==========
