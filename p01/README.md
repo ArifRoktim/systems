@@ -3,9 +3,10 @@ Shell Project
 by Arif Roktim and Daniel Regassa  
 
 Features:  
-* Forks and executes commands!
-* Parses multiple commands on one line!
-* Redirects using >, < and |!
+* Forks and executes commands
+* Parses multiple commands on one line
+* Gets rid of extraneous spaces between tokens
+* Redirects using >, < and |
   * Supports append redirection `>>`
   * Supports double redirection `cmd < foo > bar`
 * Shell variables! Uses bash syntax
@@ -13,6 +14,11 @@ Features:
     * Var value can't have spaces in it
   * Can echo variables using `echo $varname`
 * Reads and executes from a file called _.shellrc_ at startup
+* If "-l" flag passed to main and lolcat installed, will output everything rainbow!
+  * WARNING: Very buggy!!!! Most of the time will hang at startup and during operation. I think because of memory errors
+  * Sometimes get encoding errors
+  * Picture of it working:
+![Picture of loclat mode working](https://i.imgur.com/G2hHlmd.png)
 
 Attempted:
 * A more efficient parse_args() function called new_parse_args(), too lazy to rewrite code to accomadate it
@@ -24,7 +30,12 @@ Planned features:
 Bugs:
 * Variables cant have spaces in their value
 * Doesn't support redirection with pipes `ls | sort -r > foo`
-	
+* The lolcat mode (when ./main is passed the "-l" flag) is a bug in it of itself... :/
+  * Can't exit in lolcat mode
+  * Most of the time hangs on startup
+  * Most of the time hangs on prompt
+  * Doesnt print prompt
+
 Files & Function Headers:  
 
 ## builtin.c

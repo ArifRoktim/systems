@@ -18,8 +18,6 @@ void rainbow(){
   int f = fork();
   if(f){
     int file = open("/tmp/shell", O_RDONLY);
-    int size;
-    char buf[100];
     while(loop){
       int f1 = fork();
       if(f1){
