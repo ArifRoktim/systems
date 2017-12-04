@@ -132,7 +132,7 @@ void echo(char **args){
 				//printf("Print variable");
 				print_var(str);
 			} else {
-				printf("%s", str);
+				printf("%s ", str);
 			}
 		}
 		i++;
