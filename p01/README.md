@@ -27,7 +27,8 @@ Changes cwd to path described in dir
 ### void echo()
 Inputs:  char \*\* args  
 Returns: Nothing  
-Echos the strings in args to STDOUT
+Echos the strings in args to STDOUT  
+Echos variables. Variables are denoted by a dollar sign in front of them
 
 ### void print_prompt()
 Inputs:  None  
@@ -37,7 +38,7 @@ Prints the prompt(current working directory) at the beginning of each cycle of t
 ### char \* get\_input() 
 Inputs:  None  
 Returns: User input (commands)  
-Reads string from STDIN  
+Reads string from STDIN. Strips newlines and extraneous spaces. Returns cleaned string
   
 ### void print\_prompt() 
 Inputs:  None  
@@ -47,13 +48,13 @@ Prints the prompt(current working directory) at the beginning of each cycle of t
 ### void assign\_var()
 Inputs:  char \* input  
 Returns: Nothing  
-Assigns value to shell variable input  
+Assigns value to shell variable _input_  
   
 ### int do\_builtins()
 Inputs:  char \*\* args  
 Returns: 1 if command is echo, cd, exit, or variable assignment  
 0 otherwise  
-Determines whether child should be forked to run command  
+Determines whether cmd is a builtin command and if so runs it
   
 
 ## misc.c
@@ -78,9 +79,10 @@ Handles parsing of input
 ### char \*\* parse\_args()
 Inputs: char \* line 	The string passed in from user through get_input() or ./.shellrc  
 char \* delim	One of ' ' , ';' , '>', '<', '|'  
-Returns:  An array of null-terminated strings that is the result of parsing line by delim
+Returns:  A null-terminated array of null-terminated strings that is the result of parsing line by delim. 
 
 First used to parse line into commands by semicolon delimiter.  
+Then used to split commands for redirection.  
 Then used to parse commands into tokens by delimiter ' '
 	
 ### void print\_str\_arr()
@@ -98,7 +100,6 @@ Inputs: char \* str
 Returns: Returns a new string that has no extra spaces:  
 either consecutive, leading, or trailing
     
-	
 ### int fork\_and\_exec()
 Inputs: char \*\* args  
 Returns: 1 if sucessfull  
@@ -107,15 +108,18 @@ Forks off a child and makes it execute exevp(args[0], args)
 ### void read\_and\_exec()
 Inputs: char \* input  
 Returns: Nothing  
+The main parsing function. Seperates input first by semicolons.  
+Then seperates input by redirection symbols (i.e., "><|")  
+Then seperates cmds into tokens by space
+Runs redirection, builtins, and cmds in PATH
 	
 ### void redirect()
-Inputs: char \*\*args, char direction (either '>' or '<')  
+Inputs: char \*\*args, char direction (either '>', '<', or '|')  
 Returns: Nothing  
-    
-Redirects 
+Reads _direction_ and if necessary opens the correct file. Then runs _dup\_and\_exec_
 	
 ### void dup\_and\_exec()
 Inputs:  char \*\*args, int file_descriptor, char direction (either '>' or '<')  
 Returns: Nothing  
-    
+Reads _direction_ and then _fork_s and _dup2_s accordingly. Then _execvp_s cmd
     
