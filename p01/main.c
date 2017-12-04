@@ -10,21 +10,21 @@ int loop = 1;
 char *vars[256][2];
 
 int main( int argc, char *argv[] ){
-  // Run initialization stuff
-  init();
+	// Run initialization stuff
+	init();
 
-  while(loop){
-    print_prompt();
-    char *input = get_input();
+	while(loop){
+		print_prompt();
+		char *input = get_input();
 
-    if( input ){
-      read_and_exec(input);
-      free(input);
-    }
-  }
+		if( input ){
+			read_and_exec(input);
+			free(input);
+		}
+	}
 
-  // free stuff (and later save history)
-  cleanup();
+	// free stuff (and later save history)
+	cleanup();
 
-  return 0;
+	return 0;
 }
