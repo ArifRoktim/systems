@@ -9,10 +9,16 @@ void strip_newline( char *str );
 // Returns a new string that has no extra spaces
 // i.e, no multiple consecutive spaces or spaces after semicolons
 char * strip_spaces( char *str );
-
-
+//Forks off a child and makes it execute exevp(args[0], args)
 int fork_and_exec( char **args );
+/*
+The main parsing function. Seperates input first by semicolons.  
+Then seperates input by redirection symbols (i.e., "><|")  
+Then seperates cmds into tokens by space
+Runs redirection, builtins, and cmds in PATH
+ */
 void read_and_exec( char* input );
+//Reads direction and if necessary opens the correct file. Then runs dup_and_exec
 void redirect(char **args, char direction);
-
+//Reads direction and then forks and dup2s accordingly. Then execvps cmd
 void dup_and_exec( char **args, int file, char direction );
