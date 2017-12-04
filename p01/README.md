@@ -5,13 +5,25 @@ by Arif Roktim and Daniel Regassa
 Features:  
 * Forks and executes commands!
 * Parses multiple commands on one line!
-* Redirects using >, <!
+* Redirects using >, < and |!
+  * Supports append redirection `>>`
+  * Supports double redirection `cmd < foo > bar`
+* Shell variables! Uses bash syntax
+  * Set variables using `varname=varvalue`
+    * Var value can't have spaces in it
+  * Can echo variables using `echo $varname`
+* Reads and executes from a file called _.shellrc_ at startup
 
 Attempted:
 * A more efficient parse_args() function called new_parse_args(), too lazy to rewrite code to accomadate it
+* The ability to have spaces in variable values. Attempted to replace all space occurences with the value -1 and then after using parse_args replace all -1s with a space but didn't work and was too lazy to debug
+
+Planned features:
+* Have shell read from PS1 variable to set prompt
 
 Bugs:
 * Variables cant have spaces in their value
+* Doesn't support redirection with pipes `ls | sort -r > foo`
 	
 Files & Function Headers:  
 
