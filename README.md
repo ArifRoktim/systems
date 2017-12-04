@@ -14,28 +14,23 @@ Features:
     * Var value can't have spaces in it
   * Can echo variables using `echo $varname`
 * Reads and executes from a file called _.shellrc_ at startup
-* If "-l" flag passed to main and lolcat installed, will output everything rainbow!
-  * WARNING: Very buggy!!!! Most of the time will hang at startup and during operation. I think because of memory errors
-  * Sometimes get encoding errors
+* Lolcat mode! If "-l" flag passed to main and lolcat installed, will output everything rainbow!
   * Picture of it working:
 ![Picture of loclat mode working](https://i.imgur.com/G2hHlmd.png)
 
 Attempted:
 * A more efficient parse_args() function called new_parse_args(), too lazy to rewrite code to accomadate it
 * The ability to have spaces in variable values. Attempted to replace all space occurences with the value -1 and then after using parse_args replace all -1s with a space but didn't work and was too lazy to debug
-
-Planned features:
 * Have shell read from PS1 variable to set prompt
 
 Bugs:
 * Variables cant have spaces in their value
 * Doesn't support redirection with pipes `ls | sort -r > foo`
-* When reading in cmds via redirection, echo cmds always show up at the bottom
-* The lolcat mode (when ./main is passed the "-l" flag) is a bug in it of itself... :/
+* Lolcat mode 
   * Can't exit in lolcat mode
-  * Most of the time hangs on startup
-  * Most of the time hangs on prompt
-  * Doesnt print prompt
+  * Doesnt print prompt until you hit enter
+  * Sometimes get encoding errors with lolcat `invalid byte sequence in UTF-8 (ArgumentError)`
+    * Happens when doing things such as `$ cat /dev/random`
 
 Files & Function Headers:  
 
@@ -83,7 +78,7 @@ Determines whether cmd is a builtin command and if so runs it
 
 ## misc.c
 
-Handles necessary initialization and cleanup required for shell
+Miscellaneous functions
   
 ### void init()
 Inputs:  None  
@@ -95,6 +90,13 @@ Reads and executes commands from ./.shellrc before prompting user
 Inputs:  None  
 Returns: Nothing  
 Frees the global variable array responsible for holding shell variables
+
+### void rainbow()
+Inputs:  None  
+Outputs: Nothing  
+Makes a pipe and forks. Parent opens pipe and redirects stdout to pipe.  
+Child opens pipe and redirects stdin to pipe. Forks and execs lolcat.  
+Result is that stdout output is rainbow  
 
 ## parse.c
 

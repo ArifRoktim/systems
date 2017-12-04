@@ -4,6 +4,9 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
 #include "parse.h"
 
 extern int loop;
@@ -56,3 +59,27 @@ void cleanup(){
 		i++;
 	}
 }
+
+void rainbow(){
+  mkfifo("/tmp/shell", 0600);
+  int f = fork();
+  if(f){
+    int file = open("/tmp/shell", O_RDONLY);
+    while(loop){
+      int f1 = fork();
+      if(f1){
+        int status;
+        wait(&status);
+      } else {
+        dup2(file, STDIN_FILENO);
+		char *args[] = {"lolcat", 0};
+        execvp("lolcat", args);
+		printf("Error execing lolcat: %s\n", strerror(errno));
+      }
+    }
+  } else {
+    int file = open("/tmp/shell", O_WRONLY);
+    dup2(file, STDOUT_FILENO);
+  }
+}
+
