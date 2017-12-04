@@ -144,5 +144,5 @@ Reads _direction_ and if necessary opens the correct file. Then runs _dup\_and\_
 ### void dup\_and\_exec()
 Inputs:  char \*\*args, int file_descriptor, char direction (either '>' or '<')  
 Returns: Nothing  
-Reads _direction_ and then _fork_s and _dup2_s accordingly. Then _execvp_s cmd
+Reads _direction_ and then _fork_ s and _dup2_ s accordingly. Then _execvp_ s cmd
     
